@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <h2>Página inicial do CaspokeWigs</h2>
+    <p>Bem vindo, ${usuarioLogado.nome}</p> <br />
+    <a href="listaClientes">Clique aqui</a> para administrar Clientes<br />
+    <a href="listaPerucas">Clique aqui</a> para administrar Perucas<br />
+    <br/>
+    <a href="listaOrcamentos">Clique aqui</a> para administrar Orcamentos<br />
+    <a href="listaEncomendas">Clique aqui</a> para administrar Encomendas<br />
+  </body>
+</html>

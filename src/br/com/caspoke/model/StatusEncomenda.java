@@ -1,0 +1,12 @@
+package br.com.caspoke.model;
+
+public enum StatusEncomenda {
+
+	ENVIADO,
+	AGUARDANDO_ORCAMENTO,
+	ORCAMENTO_FEITO,
+	AGUARDANDO_ENTRADA,
+	AGUARDANDO_MATERIAIS,
+	EM_DESENVOLVIMENTO;
+	
+}
