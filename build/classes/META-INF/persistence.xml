@@ -12,6 +12,7 @@
 		 <class>br.com.caspoke.model.Orcamento</class>
 		 <class>br.com.caspoke.model.Encomenda</class>
 		 <class>br.com.caspoke.model.Peruca</class>
+		 <class>br.com.caspoke.model.PerucaBase</class>
 		 <properties>
 			
 			<!--  A SER DELETADO, SÓ USA NOS TESTES -->

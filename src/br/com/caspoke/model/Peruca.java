@@ -11,8 +11,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorValue("P")
 public class Peruca {
 	
 	@Id

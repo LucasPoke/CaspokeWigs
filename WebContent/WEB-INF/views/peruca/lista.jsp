@@ -70,13 +70,14 @@
       		<c:if test="${p.peso > 0}">
       			<td>${p.peso}g</td>
       		</c:if>
-      		<td>
-				<input class="starrating" id="${p.id}" value="${p.avaliacao}"/>
-      		</td>
+      		<td><a href="novaPerucaBase?id=${p.id}">Usar como peruca base!</a></td>
       	</tr>
       	<tr>
       		<th>Cor</th>
       		<td>${p.cor}</td>
+      		<td>
+				<input class="starrating" id="${p.id}" value="${p.avaliacao}"/>
+      		</td>
       	</tr>
       	<tr>
       		<th>Local</th>
