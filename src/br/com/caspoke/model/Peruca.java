@@ -2,9 +2,17 @@ package br.com.caspoke.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Peruca {
 	
+	@Id
+	@GeneratedValue
 	private long id;
+	
 	private BigDecimal preco;
 	private int tamanho;
 	private int peso;

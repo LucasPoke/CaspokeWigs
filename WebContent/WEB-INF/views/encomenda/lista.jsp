@@ -18,18 +18,18 @@
   <table id="tabelaEncomendas">
   <tr>
   	<th>Status</th>
-    <th>Nome</th>
+  	<th>Cliente</th>
     <th>Personagem</th>
     <th>Preço</th>
     <th>Rastreio</th>
   </tr>
   <c:forEach items="${encomendas}" var="e">
-    <tr id="encomenda_${e.id}">	
-      <td>${e.status}</td>
-      <td>${e.orcamento.cliente.nome}</td>
-      <td>${e.orcamento.personagem}</td>
-      <td>${e.preco}</td>
-      <td>${e.rastreio_br}</td>
+	<tr id="encomenda_${e.id}">	
+		<td>${e.status}</td>
+		<td>${e.orcamento.cliente.nome}</td>
+      	<td>${e.orcamento.personagem}</td>
+      	<td>${e.preco}</td>
+      	<td>${e.rastreio_br}</td>
       
       <td><a href="detalharEncomenda?id=${e.id}">Detalhes (NÃO IMPL)</a>
       <td><a href="mostraEncomenda?id=${e.id}">Alterar (NÃO IMPL)</a></td>
