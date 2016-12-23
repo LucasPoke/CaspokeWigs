@@ -3,11 +3,16 @@ package br.com.caspoke.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorValue("P")
 public class Peruca {
 	
 	@Id
@@ -27,7 +32,9 @@ public class Peruca {
 	@Column(nullable = false)
 	private String link;
 	private int avaliacao;
-	
+	private boolean temDivisao;
+	private boolean semFranja;
+	private boolean temOmbre;
 	
 	public long getId() {
 		return id;
@@ -82,6 +89,24 @@ public class Peruca {
 	}
 	public void setAvaliacao(int avaliacao) {
 		this.avaliacao = avaliacao;
+	}
+	public boolean getTemDivisao() {
+		return temDivisao;
+	}
+	public void setTemDivisao(boolean temDivisao) {
+		this.temDivisao = temDivisao;
+	}
+	public boolean getSemFranja() {
+		return semFranja;
+	}
+	public void setSemFranja(boolean semFranja) {
+		this.semFranja = semFranja;
+	}
+	public boolean getTemOmbre() {
+		return temOmbre;
+	}
+	public void setTemOmbre(boolean temOmbre) {
+		this.temOmbre = temOmbre;
 	}
 	
 	

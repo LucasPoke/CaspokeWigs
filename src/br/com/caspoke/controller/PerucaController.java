@@ -33,6 +33,11 @@ public class PerucaController {
 	
 	@RequestMapping("adicionaPeruca")
 	public String adiciona(@Valid Peruca p, BindingResult result) {
+
+		System.out.println(p.getSemFranja());
+		System.out.println(p.getTemDivisao());
+		System.out.println(p.getTemOmbre());
+		
 		ArrayList<String> cores = new ArrayList<String>(Arrays.asList(p.getCor().split("\\s*,\\s*")));
 		if (cores.size() > 1)
 		{
@@ -48,6 +53,9 @@ public class PerucaController {
 				peruca.setVendedor(p.getVendedor());
 				peruca.setLink(p.getLink());
 				peruca.setAvaliacao(p.getAvaliacao());
+				peruca.setSemFranja(p.getSemFranja());
+				peruca.setTemDivisao(p.getTemDivisao());
+				peruca.setTemOmbre(p.getTemOmbre());
 				peruca.setCor(cores.get(i));
 				perucas.add(peruca);
 			}
@@ -56,6 +64,16 @@ public class PerucaController {
 		else {
 			dao.insere(p);
 		}
+		return "redirect:listaPerucas";
+	}
+	
+	@RequestMapping("alteraPeruca")
+	public String altera(@Valid Peruca p, BindingResult result) {
+		System.out.println(p.getSemFranja());
+		System.out.println(p.getTemDivisao());
+		System.out.println(p.getTemOmbre());
+		
+		dao.altera(p);
 		return "redirect:listaPerucas";
 	}
 	
@@ -77,12 +95,6 @@ public class PerucaController {
 	public String mostra(long id, Model model) {
 		model.addAttribute("peruca", dao.buscaPorId(id));
 		return "peruca/mostra";
-	}
-	
-	@RequestMapping("alteraPeruca")
-	public String altera(Peruca p) {
-		dao.altera(p);
-		return "redirect:listaPerucas";
 	}
 	
 	@RequestMapping("filtraPorCor")

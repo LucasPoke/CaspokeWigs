@@ -53,13 +53,13 @@
     	<tr>
     		<td rowspan="5"><a href="${p.link}"><img src="<c:url value="/resources/imagens/perucas/${p.id}.jpg"/>" height="150"/></a></td>
       		<th>Preço</th>
-      		<td>${p.preco}</td>
+      		<td>$${p.preco}</td>
       		<td><a href="mostraPeruca?id=${p.id}">Alterar</a></td>
       		<td>
       	</tr>
       	<tr>
       		<th>Tamanho</th>
-      		<td>${p.tamanho}</td>
+      		<td>${p.tamanho}cm</td>
       		<td><a href="removePeruca?id=${p.id}">Remover</a></td>
       	</tr>
       	<tr>
@@ -68,7 +68,7 @@
       			<td>-</td>
       		</c:if>
       		<c:if test="${p.peso > 0}">
-      			<td>${p.peso}</td>
+      			<td>${p.peso}g</td>
       		</c:if>
       		<td>
 				<input class="starrating" id="${p.id}" value="${p.avaliacao}"/>
