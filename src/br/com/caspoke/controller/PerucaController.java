@@ -47,6 +47,7 @@ public class PerucaController {
 				peruca.setLocal(p.getLocal());
 				peruca.setVendedor(p.getVendedor());
 				peruca.setLink(p.getLink());
+				peruca.setAvaliacao(p.getAvaliacao());
 				peruca.setCor(cores.get(i));
 				perucas.add(peruca);
 			}
@@ -89,6 +90,14 @@ public class PerucaController {
 		List<Peruca> perucas = dao.buscaPorCor(cor);
 		model.addAttribute("perucas", perucas);
 		model.addAttribute("cores", Cor.values());
+		model.addAttribute("corSelecionada", cor);
 		return "peruca/lista";
+	}
+	
+	@RequestMapping("atualizaAvaliacao")
+	public void atualizaAvaliacao(long id, int valor) {
+		Peruca p = dao.buscaPorId(id);
+		p.setAvaliacao(valor);
+		dao.insere(p);
 	}
 }

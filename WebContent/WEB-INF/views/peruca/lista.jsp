@@ -2,16 +2,42 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-	<script type="text/javascript" src="resources/js/jquery-3.1.1.min.js">
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+	<link href="resources/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 	<script src="resources/js/star-rating.js" type="text/javascript"></script>
+ 	
+  
+  
+	<script>
+	$(function(){
+		$(".starrating").rating({
+			step: 1,
+			clearCaption: 'Não avaliado',
+			size: 'xs',
+			showCaption: false
+		});
+		
+		$(".starrating").rating().on("rating.change", function(event, value) {
+				$.post("atualizaAvaliacao", {'id' : this.id, 'valor' : value})
+			});
+		
+		$(".starrating").rating().on("rating.clear", function(event) {
+			$.post("atualizaAvaliacao", {'id' : this.id, 'valor' : 0})	
+		});
+	});
+	
+	
 	</script>
 </head>
 
 <body>
-  
   	<a href="logout">Sair do sistema</a><br />
   	<a href="novaPeruca">Cadastrar nova peruca</a><br />
   	<a href="menu">Voltar ao menu principal</a><br />
 
+	
   <br /> <br />      
   <h2> Filtrar por cor</h2>
   
@@ -44,6 +70,9 @@
       		<c:if test="${p.peso > 0}">
       			<td>${p.peso}</td>
       		</c:if>
+      		<td>
+				<input class="starrating" id="${p.id}" value="${p.avaliacao}"/>
+      		</td>
       	</tr>
       	<tr>
       		<th>Cor</th>
@@ -53,10 +82,6 @@
       		<th>Local</th>
       		<td>${p.local}:${p.vendedor}</td>
       	</tr>
-      <!-- 
-      <td><a href="mostraPeruca?id=${p.id}">Alterar</a></td>
-      <td><a href="removePeruca?id=${p.id}">Remover</a></td>
-      <td><a href="novoEstoque?id=${p.id}">Adicionar ao estoque</a></td> -->
   </c:forEach>
   </table>
   

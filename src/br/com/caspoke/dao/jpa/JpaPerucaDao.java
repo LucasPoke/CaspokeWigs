@@ -20,7 +20,7 @@ public class JpaPerucaDao implements IPerucaDao {
 	EntityManager manager;
 	
 	public List<Peruca> lista() {
-		return manager.createQuery("select p from Peruca p").getResultList();
+		return manager.createQuery("select p from Peruca p order by avaliacao desc").getResultList();
 	}
 
 	public Peruca buscaPorId(long id) {
@@ -29,7 +29,6 @@ public class JpaPerucaDao implements IPerucaDao {
 
 	public void insere(Peruca p) {
 		manager.persist(p);
-		System.out.println("inserindo peruca de cor " + p.getCor());
 	}
 
 	public void remove(Peruca p) {
@@ -53,8 +52,7 @@ public class JpaPerucaDao implements IPerucaDao {
 	public List<Peruca> buscaPorCor(Cor cor) {
 		String corTexto = cor.toString();
 		corTexto = corTexto.replace("_", " ");
-		System.out.println("COR PESQUISADA: " + corTexto);
-		Query q = manager.createQuery("select p from Peruca p where p.cor = :c");
+		Query q = manager.createQuery("select p from Peruca p where p.cor = :c order by avaliacao desc");
 		q.setParameter("c", corTexto);
 		
 		List<Peruca> resultado = q.getResultList();
