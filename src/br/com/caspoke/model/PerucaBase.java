@@ -20,6 +20,9 @@ public class PerucaBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "peruca_id")
 	Peruca peruca;
+	@ManyToOne
+	@JoinColumn(name = "encomenda_id")
+	Encomenda encomenda;
 	
 	public int getQuantidade() {
 		return quantidade;

@@ -60,6 +60,13 @@ public class PerucaBaseController {
 		return "redirect:listaPerucasBase";
 	}
 	
+	@RequestMapping("removePerucaBase")
+	public String remove (long id) {
+		PerucaBase removida = dao.buscaPorId(id);
+		dao.remove(removida);
+		return "redirect:listaPerucasBase";
+	}
+	
 	//ESSE METODO DEVE, NO FUTURO, MUDAR AUTOMATICAMENTE O STATUS DA ENCOMENDA ASSOCIADA PARA "EM DESENVOLVIMENTO"
 	@RequestMapping("atualizaChegada")
 	public void atualizaChegada(long id) {

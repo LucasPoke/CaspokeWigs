@@ -2,16 +2,14 @@ package br.com.caspoke.model;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,9 +33,14 @@ public class Encomenda {
 	private Calendar data_pagamento;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private Calendar data_inicio;
+	private Calendar data_final;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	private Calendar data_envio;
 	@Column(nullable = false)
 	private StatusEncomenda status;
+	@OneToMany(mappedBy = "encomenda")
+	private List<PerucaBase> perucasBase;
 	
 	public BigDecimal getPreco() {
 		return preco;
@@ -56,12 +59,6 @@ public class Encomenda {
 	}
 	public void setRastreio_br(String rastreio_br) {
 		this.rastreio_br = rastreio_br;
-	}
-	public Calendar getData_inicio() {
-		return data_inicio;
-	}
-	public void setData_inicio(Calendar data_inicio) {
-		this.data_inicio = data_inicio;
 	}
 	public Calendar getData_pagamento() {
 		return data_pagamento;
@@ -86,6 +83,18 @@ public class Encomenda {
 	}
 	public void setStatus(StatusEncomenda status) {
 		this.status = status;
+	}
+	public Calendar getData_final() {
+		return data_final;
+	}
+	public void setData_final(Calendar data_final) {
+		this.data_final = data_final;
+	}
+	public Calendar getData_envio() {
+		return data_envio;
+	}
+	public void setData_envio(Calendar data_envio) {
+		this.data_envio = data_envio;
 	}
 	
 	
