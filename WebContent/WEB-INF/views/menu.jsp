@@ -8,5 +8,8 @@
     <br/>
     <a href="listaOrcamentos">Clique aqui</a> para administrar Orcamentos<br />
     <a href="listaEncomendas">Clique aqui</a> para administrar Encomendas<br />
+    <br /><br /><br /><br />
+    
+    <a href="testeCores">BUSCAR POR CORES NÃO CADASTRADAS</a><br />
   </body>
 </html>

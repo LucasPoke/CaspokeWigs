@@ -33,10 +33,10 @@ public class PerucaBaseController {
 	}
 	
 	@RequestMapping("adicionaPerucaBase")
-	public String adiciona(PerucaBase p, long peruca_id) {
+	public String adiciona(long peruca_id, @Valid PerucaBase perucaBase, BindingResult result) {
 		System.out.println("Id da peruca usada: " + peruca_id);
-		p.setPeruca(perucaDao.buscaPorId(peruca_id));
-		dao.insere(p);
+		perucaBase.setPeruca(perucaDao.buscaPorId(peruca_id));
+		dao.insere(perucaBase);
 		return "redirect:listaPerucasBase";
 	}
 	

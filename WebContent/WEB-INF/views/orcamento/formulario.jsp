@@ -29,9 +29,10 @@
 	    Local:<br />
 	    <input type="text" name="local"/><br />
 	    Data de cadastro:<br />
-	    <caspoke:campoData id="data" /><br />
+	    <caspoke:campoData id="data_cadastro" /><br />
 	  	Comentarios:<br />
 	  	<textarea rows="4" cols="50" name="comentarios" form="adicionaForm"></textarea>
+	    
 	    <input type="submit" value="Adicionar"/>
 	    
     </form>

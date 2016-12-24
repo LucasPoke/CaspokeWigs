@@ -12,5 +12,6 @@ public interface IOrcamentoDao {
 	public void insere(Orcamento o);
 	public void remove(Orcamento o);
 	public void altera(Orcamento o);
+	public List<Orcamento> listaAceitos();
 	
 }

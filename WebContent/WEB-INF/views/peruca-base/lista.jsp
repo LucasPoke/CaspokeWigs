@@ -74,7 +74,12 @@
       		<th>Cor</th>
       		<td>${p.peruca.cor}</td>
       		<th>Rastreio:</th>
-      		<td>${p.rastreio}</td>
+      		<c:if test="${empty p.rastreio}">
+      			<td>Rastreio não disponível</td>
+      		</c:if>
+      		<c:if test="${not empty p.rastreio}">
+      			<td>${p.rastreio}</td>
+      		</c:if>
       	</tr>
       	<tr>
       		<th>Local</th>

@@ -20,10 +20,12 @@ public class JpaOrcamentoDao implements IOrcamentoDao {
 		return manager.createQuery("select o from Orcamento o").getResultList();
 	}
 
-	//A SER PREENCHIDO
 	public List<Orcamento> listaEmEspera() {
-		// TODO Auto-generated method stub
-		return null;
+		return manager.createQuery("select o from Orcamento o where aceito = false").getResultList();
+	}
+	
+	public List<Orcamento> listaAceitos () {
+		return manager.createQuery("select o from Orcamento o where aceito = true").getResultList();
 	}
 
 	public Orcamento buscaPorId(long id) {

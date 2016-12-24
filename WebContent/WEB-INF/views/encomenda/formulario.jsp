@@ -16,21 +16,27 @@
     
     <form action="adicionaEncomenda" method="post">
     
-    	<input type="hidden" name="orcamento_id" value="${orcamento_id}" />
+    	<input type="hidden" name="orcamento_id" value="${id}" />
     	
 	    Preço:<br />
 	    <input type="text" name="preco"/><br />
-	    Frete:<br />
-	    <input type="text" name="frete"/><br />
-	    Rastreio:<br />
-	    <input type="text" name="rastreio_br"/><br />
 	    Status:<br />
 	  	<select name="status">
 	  		<c:forEach items="${status}" var="s">
        			<option value="${s}">${s}</option>
    			</c:forEach>
 	  	</select>
-	  	Início da confecção: <caspoke:campoData id="data_inicio" /><br />
+	  	<br />
+	  	Frete:<br />
+	    <input type="text" name="frete"/><br />
+	    Rastreio:<br />
+	    <input type="text" name="rastreio_br"/><br />
+	    Data de pagamento:<br />
+	    <caspoke:campoData id="data_pagamento" /><br />
+	    
+	  	<!-- ESSES CAMPOS DEPENDEM DO STATUS
+	  	
+	  	Data de início de confecção: <caspoke:campoData id="data_inicio" /><br /> -->
 	    <input type="submit" value="Adicionar"/>
 	    
     </form>

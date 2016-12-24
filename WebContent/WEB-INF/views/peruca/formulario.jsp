@@ -44,6 +44,7 @@
 		    	}
 		        
 		    });
+		    
 		});  
 		</script> 
   	</head>
@@ -51,7 +52,7 @@
   <body>
     <h3>Adicionar peruca</h3>
     
-    <form action="adicionaPeruca" method="post">
+    <form action="adicionaPerucaESolicitaImagem" id="formAdiciona" method="post">
     	Preço: <input type="text" name="preco" /><br />
     	Tamanho: <input type="text" name="tamanho" /><br />
      	Peso: <input type="text" name="peso" /><br />
@@ -65,10 +66,8 @@
       	<caspoke:campoBoolean nome="semFranja"/> Sem franja <br />
       	<caspoke:campoBoolean nome="temDivisao"/> Tem divisão <br />
       	<caspoke:campoBoolean nome="temOmbre"/> Tem ombre <br />
-      	<!-- 
-      	<input type="checkbox" class="booleanCheckbox" name="temDivisao" value=true> Tem divisão<br />
-      	<input type="checkbox" class="booleanCheckbox" name="semFranja" value=true> Sem franja<br />
-      	<input type="checkbox" class="booleanCheckbox" name="temOmbre" value=true> Tem ombre<br />-->
+      	
+      	<div id="uploadFotos"></div>
       <input type="submit" value="Adicionar">
     </form>
   </body>

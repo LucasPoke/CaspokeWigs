@@ -6,6 +6,9 @@ public enum Cor {
 	Branco,
 	Branco_prateado,
 	
+	Cinza,
+	//Cinza_escuro,
+	
 	Vermelho,
 	Vermelho_escuro,
 	
@@ -15,24 +18,28 @@ public enum Cor {
 	
 	Laranja,
 	
-	Loiro,
 	Loiro_claro,
+	Loiro,
 	Loiro_amarelado,
 	
 	Amarelo,
 	
-	Verde,
-	//Verde_claro,
-	Verde_escuro,
 	Verde_neon,
+	Verde_oliva,
+	Verde,
+	Verde_escuro,
+	
+	Turquesa,
 	
 	Azul_claro,
+	Azul,
+	Azul_petroleo,
 	Azul_escuro,
 	Azul_marinho,
 	
 	Roxo,
 	Lilas,
-	//Roxo_escuro,
+	Roxo_escuro,
 	
 	
 	Rosa,

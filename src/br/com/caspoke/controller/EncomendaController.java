@@ -27,11 +27,11 @@ public class EncomendaController {
 	@Qualifier("jpaOrcamentoDao")
 	private IOrcamentoDao orcamentoDao;
 	
-	
 	@RequestMapping("novaEncomenda")
 	public String form(long id, Model model) {
+		System.out.println("Id: " + id);
 		model.addAttribute("status", StatusEncomenda.values());
-		model.addAttribute("orcamento_id", id);
+		model.addAttribute("id", id);
 		return "encomenda/formulario";
 	}
 	
@@ -43,17 +43,18 @@ public class EncomendaController {
 	
 	@RequestMapping("adicionaEncomenda")
 	public String adiciona(Encomenda e, long orcamento_id) {
-		Orcamento o = orcamentoDao.buscaPorId(orcamento_id);
-		e.setData_cadastro(Calendar.getInstance());
-		e.setOrcamento(o);
+		if (e.getData_pagamento() == null)
+			e.setData_pagamento(Calendar.getInstance());
+		//tratar data de iniciio
 		
-		System.out.println(e.getPreco());
+		Orcamento o = orcamentoDao.buscaPorId(orcamento_id);
+		e.setOrcamento(o);
 		System.out.println(e.getStatus());
-		System.out.println(e.getFrete());
-		System.out.println(e.getRastreio_br());
-		System.out.println(e.getData_cadastro().getTimeInMillis());
-		System.out.println(e.getOrcamento().getPersonagem());
-		//dao.insere(e);
+		dao.insere(e);
+		
+		o.setAceito(true);
+		orcamentoDao.altera(o);
+		
 		return "redirect:listaEncomendas";
 	}
 	

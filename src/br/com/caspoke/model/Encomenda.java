@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,36 +24,21 @@ public class Encomenda {
 	@Id
 	@GeneratedValue
 	private long id;
-	@OneToOne(optional = false)
-	@JoinColumn(name = "orcamento_id")
+	@OneToOne
+	@JoinColumn(name="orcamento_id")
 	private Orcamento orcamento;
-	@Column(nullable = false)
 	private BigDecimal preco;
 	private BigDecimal frete;
 	private String rastreio_br;
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name="status_id", nullable = false)
-	private StatusEncomenda status;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Column(nullable = false)
-	private Calendar data_cadastro;
+	private Calendar data_pagamento;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar data_inicio;
+	@Column(nullable = false)
+	private StatusEncomenda status;
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public Orcamento getOrcamento() {
-		return orcamento;
-	}
-	public void setOrcamento(Orcamento orcamento) {
-		this.orcamento = orcamento;
-	}
 	public BigDecimal getPreco() {
 		return preco;
 	}
@@ -70,23 +57,35 @@ public class Encomenda {
 	public void setRastreio_br(String rastreio_br) {
 		this.rastreio_br = rastreio_br;
 	}
-	public StatusEncomenda getStatus() {
-		return status;
-	}
-	public void setStatus(StatusEncomenda status) {
-		this.status = status;
-	}
 	public Calendar getData_inicio() {
 		return data_inicio;
 	}
 	public void setData_inicio(Calendar data_inicio) {
 		this.data_inicio = data_inicio;
 	}
-	public Calendar getData_cadastro() {
-		return data_cadastro;
+	public Calendar getData_pagamento() {
+		return data_pagamento;
 	}
-	public void setData_cadastro(Calendar data_cadastro) {
-		this.data_cadastro = data_cadastro;
+	public void setData_pagamento(Calendar data_pagamento) {
+		this.data_pagamento = data_pagamento;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public Orcamento getOrcamento() {
+		return orcamento;
+	}
+	public void setOrcamento(Orcamento orcamento) {
+		this.orcamento = orcamento;
+	}
+	public StatusEncomenda getStatus() {
+		return status;
+	}
+	public void setStatus(StatusEncomenda status) {
+		this.status = status;
 	}
 	
 	
