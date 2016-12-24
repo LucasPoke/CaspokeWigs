@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="caspoke" %>
 <html>
 <body>
@@ -6,8 +7,19 @@
   <form action="alteraOrcamento" id="alteraForm" method="post">
   
 	    <input type="hidden" name="id" value="${orcamento.id}" />
-	  	<input type="hidden" name="cliente_id" value="${orcamento.cliente.id}" />
+	  	<input type="hidden" name="aceito" value="${orcamento.aceito}" />
 	  	
+	  	Cliente:<br />
+	  	<select name="cliente_id">
+	  		<c:forEach items="${clientes}" var="c">
+	  			<c:if test="${orcamento.cliente.id == c.id}">
+	  				<option value="${c.id}" selected="selected">${c.id} - ${c.nome}</option>
+	  			</c:if>
+	  			<c:if test="${orcamento.cliente.id != c.id}">
+       				<option value="${c.id}">${c.id} - ${c.nome}</option>
+	  			</c:if>
+   			</c:forEach>
+	  	</select> <br />
 	    Personagem:<br />
 	    <input type="text" name="personagem" value="${orcamento.personagem}" /><br />
 	    Serie:<br />

@@ -63,4 +63,33 @@ public class EncomendaController {
 		dao.remove(e);
 		return "redirect:listaEncomendas";
 	}
+	
+	@RequestMapping("alteraEncomenda")
+	public String altera(Encomenda e, long orcamento_id) {
+		Orcamento o = orcamentoDao.buscaPorId(orcamento_id);
+		e.setOrcamento(o);
+		printEncomenda(e);
+		dao.altera(e);
+		return "redirect:listaEncomendas";
+	}
+	
+	@RequestMapping("mostraEncomenda")
+	public String mostra(long id, Model model) {
+		Encomenda e = dao.buscaPorId(id);
+		model.addAttribute("encomenda", e);
+		model.addAttribute("status", StatusEncomenda.values());
+		return "encomenda/mostra";
+	}
+	
+	public void printEncomenda (Encomenda e)
+	{
+		System.out.println("Dados da encomenda:");
+		System.out.println("Preço: " + e.getPreco());
+		System.out.println("Frete: " + e.getFrete());
+		System.out.println("Status: " + e.getStatus());
+		System.out.println("\nDados do orçamento:");
+		System.out.println("Personagem: " + e.getOrcamento().getPersonagem());
+		System.out.println("\nDados do cliente:");
+		System.out.println("Cliente: " + e.getOrcamento().getCliente().getNome());
+	}
 }

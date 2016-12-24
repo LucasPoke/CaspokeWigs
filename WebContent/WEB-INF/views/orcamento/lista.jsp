@@ -54,6 +54,7 @@
   <br /> <br />        
 
 	<h3>Lista de orçamentos em espera</h3>
+	<br />
 	  <table id="tabelaOrcamentos">
 		  <c:forEach items="${orcamentosEmEspera}" var="oe">
 		    <tr id="orcamento_${oe.id}">
@@ -90,9 +91,9 @@
 		  </c:forEach>
 		</table>
   
-  
+  <br /><br /><br />
       <h3>Orçamentos aceitos</h3>
-      
+      <br />
       
        <table id="tabelaOrcamentos">
 		  <c:forEach items="${orcamentosAceitos}" var="oa">
@@ -101,12 +102,14 @@
 		      	<td>${oa.personagem}</td>
 		      	<th>Cliente:</th>
 		      	<td>${oa.cliente.nome}</td>
+		      	<td><a href="mostraOrcamento?id=${oa.id}">Alterar</a></td>
 			</tr>
 			<tr>
 				<th>Série:</th>
 		      	<td>${oa.serie}</td>
 		      	<th>Plataforma:</th>
 		      	<td>${oa.local}</td>
+		      	<td><a href="removeOrcamento?id=${oa.id}">Remover</a></td>
 		    </tr>
 		    <tr>
 		    	<th>Comentários:</th>

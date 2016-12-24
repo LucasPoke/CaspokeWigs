@@ -65,13 +65,14 @@ public class OrcamentoController {
 	
 	@RequestMapping("mostraOrcamento")
 	public String mostra (long id, Model model) {
-		model.addAttribute("status", StatusEncomenda.values());
 		model.addAttribute("orcamento", dao.buscaPorId(id));
+		model.addAttribute("clientes", clienteDao.lista());
 		return "orcamento/mostra";
 	}
 	
 	@RequestMapping("alteraOrcamento")
-	public String altera (Orcamento o) {
+	public String altera (Orcamento o, long cliente_id) {
+		o.setCliente(clienteDao.buscaPorId(cliente_id));
 		dao.altera(o);
 		return "redirect:listaOrcamentos";
 	}
@@ -89,6 +90,19 @@ public class OrcamentoController {
 		System.out.println("tentando inserir pra " + c.getNome());
 		System.out.println("personagem " + o.getPersonagem());
 		dao.insere(o);
+		return "redirect:listaOrcamentos";
+	}
+	
+	
+	
+	
+	//MODFICACAO "À FORÇA" PRA CONSERTAR PROBLEMAS
+	@RequestMapping("aceitoTrue")
+	public String aceitoFalse (long id) {
+		Orcamento o = dao.buscaPorId(id);
+		o.setAceito(true);
+		dao.altera(o);
+		
 		return "redirect:listaOrcamentos";
 	}
 }
