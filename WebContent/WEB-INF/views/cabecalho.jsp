@@ -2,16 +2,6 @@
 
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-static-top">
 		<div class="container">
-			<!--
-			<div class="navbar-header">
-			    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-				    <span class="icon-bar"></span>
-				    <span class="icon-bar"></span>                        
-			    </button>
-			    <a class="navbar-brand" href="menu">CaspokeWigs</a>
-			</div>
-			 -->    
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 			        <li class="nav-item active">
@@ -44,9 +34,11 @@
       	</div>
 	</nav>
 	
-	<div class="jumbotron">
+	<div class="jumbotron jumbotron-banner">
 		<div class="container">
-			<a href="menu"><img class="img-responsive"  src="<c:url value="/resources/imagens/caspokewigs/banner.png"/>" /></a>
+			<div class="banner-logo-container">
+				<a href="menu"><img class="img-responsive" width="600" src="<c:url value="/resources/imagens/caspokewigs/banner-inverso2.png"/>" /></a>
+			</div>
 		</div>
 	</div>
 	
@@ -58,9 +50,15 @@
 		      	<ul class="dropdown-menu">
 		      		<li><a href="listaPerucas">Perucas favoritas</a></li>
 		      		<li><a href="listaPerucasBase">Perucas compradas</a></li>
+		      		<li><a href="novaPeruca">Cadastrar nova peruca</a></li>
 		      	</ul>
 		      </li>
-		      <li><a href="#"><span class="glyphicon glyphicon-lock"></span>Clientes</a></li>
+		      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-lock"></span>Clientes<span class="caret"></span></a>
+		      	<ul class="dropdown-menu">
+		      		<li><a href="listaClientes">Clientes cadastrados</a></li>
+		      		<li><a href="novoCliente">Cadastrar novo cliente</a></li>
+		      	</ul>
+		      </li>
 		    </ul>
 		</div>
 	</nav>

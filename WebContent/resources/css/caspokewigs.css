@@ -22,3 +22,47 @@ td
 .border-between > [class*='col-']:first-child:before {
  display: none;
 }
+
+.jumbotron-banner {
+	margin-bottom: 0;
+	padding-top: 55px;
+	padding-bottom: 5px;
+}
+
+.jumbotron-banner img {
+	display: block;
+    margin: auto;
+}
+
+.banner-logo-container {
+	width:50%;
+	margin: 0 auto; 
+	background-color: #4d3963;
+}
+.caixa-de-cor {
+	margin: 1px;
+	width: 2.5%;
+	clip: rect(0px, 30px, 60px, 0);
+}
+
+.fill-space {
+	margin: 0;
+	display:table;
+	width:100%;
+}
+
+.fill-space ul {
+	-webkit-padding-start: 0px;
+	padding:5px;
+	margin: 0px;
+}
+.fill-space li {
+	padding: 3px;
+    margin: 0 auto;
+    display: table-cell;
+    width: 1%;
+    float: none;
+}
+.fill-space img {
+	margin-left: 0px;
+}

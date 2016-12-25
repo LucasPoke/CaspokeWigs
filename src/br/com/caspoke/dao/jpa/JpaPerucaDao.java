@@ -51,6 +51,7 @@ public class JpaPerucaDao implements IPerucaDao {
 	
 	public List<Peruca> buscaPorCor(Cor cor) {
 		String corTexto = cor.toString();
+		System.out.println("Cor pesquisada: " + corTexto);
 		corTexto = corTexto.replace("_", " ");
 		Query q = manager.createQuery("select p from Peruca p where p.cor = :c order by avaliacao desc");
 		q.setParameter("c", corTexto);

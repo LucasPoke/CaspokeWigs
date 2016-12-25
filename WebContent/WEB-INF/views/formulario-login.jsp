@@ -35,7 +35,7 @@
 				    	<div class="form-group">
 				    		<label class="control-label col-sm-2" for="senha">Senha</label>
 	   						<div class="col-sm-10">
-	      						<input type="text" class="form-control" id="senha" name="senha" placeholder="Inserir senha">
+	      						<input type="password" class="form-control" id="senha" name="senha" placeholder="Inserir senha">
 	    					</div>
 				    	</div>
 				    	<div class="form-group"> 

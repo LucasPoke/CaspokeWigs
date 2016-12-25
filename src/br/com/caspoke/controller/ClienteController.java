@@ -73,7 +73,7 @@ public class ClienteController {
 	
 	@RequestMapping("mostraCliente")
 	public String mostra(long id, Model model) {
-		model.addAttribute("cliente", dao.buscaPorId(id));
+		model.addAttribute("c", dao.buscaPorId(id));
 		return "cliente/mostra";
 	}
 	
