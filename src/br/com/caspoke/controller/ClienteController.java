@@ -2,18 +2,17 @@ package br.com.caspoke.controller;
 
 import java.util.Calendar;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.caspoke.dao.IClienteDao;
 import br.com.caspoke.model.Cliente;
+import br.com.caspoke.model.Permissao;
 
 @Controller
 @Transactional
@@ -24,43 +23,40 @@ public class ClienteController {
 	private IClienteDao dao;
 	
 	@RequestMapping("novoCliente")
-	public String form () {
+	public String form (Cliente c, Model model) {
+		model.addAttribute("c", c);
 		return "cliente/formulario";
 	}
 	
 	//Atuais problemas:
-	//- Problema ao criar login automático para uma pessoa com nome repetido (UNIQUE login)
-	//- Não deve ser permitido criar login automatico se não for admin
+	//- Não deve ser permitido criar email automatico se não for admin
 	@RequestMapping("adicionaCliente")
-	public String adiciona(@Valid Cliente c, BindingResult result) {
+	public String adiciona(@ModelAttribute("cliente") Cliente c) {
 		
-		if(result.hasFieldErrors("nome")) {
-		    return "cliente/formulario";
-		  }    
-		if(result.hasFieldErrors("login")) {
-		    return "cliente/formulario";
-		  }   
-		if(result.hasFieldErrors("senha")) {
-		    return "cliente/formulario";
-		  }
-		
-		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE LOGIN
-		if (c.getLogin().equals(""))
+		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE EMAIL
+		if (c.getEmail().equals(""))
 		{
 			String[] nomes = c.getNome().toLowerCase().split(" ");
-			String login = "";
+			String email = "";
 			for (int i = 0; i < nomes.length; i++)
 			{
-				login = login + nomes[i];
+				email = email + nomes[i];
 			}
-			c.setLogin(login);
+			email += "@caspokewigs.com";
+			c.setEmail(email);
 		}
 		
+		//Esses campos só estão disponíveis para edição no modo admin
 		if (c.getData() == null)
 			c.setData(Calendar.getInstance());
+		if (c.getPermissao() == null)
+			c.setPermissao(Permissao.NORMAL.name());
 		
 		dao.insere(c);
-		return "redirect:listaClientes";
+		
+		return "redirect:efetuaLogin";
+		//so faz sentido ir pra lista de clientes se quem tiver feito o login tiver sido o admin
+		//return "redirect:listaClientes";
 	}
 	
 	@RequestMapping("listaClientes")
@@ -83,18 +79,18 @@ public class ClienteController {
 	
 	@RequestMapping("alteraCliente")
 	public String altera(Cliente c) {
-		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE LOGIN
-		if (c.getLogin().equals(""))
-		{
-			System.out.println("Id: " + c.getId());
-			String[] nomes = c.getNome().toLowerCase().split(" ");
-			String login = "";
-			for (int i = 0; i < nomes.length; i++)
-			{
-				login = login + nomes[i];
-			}
-			c.setLogin(login);
-		}
+		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE EMAIL
+				if (c.getEmail().equals(""))
+				{
+					String[] nomes = c.getNome().toLowerCase().split(" ");
+					String email = "";
+					for (int i = 0; i < nomes.length; i++)
+					{
+						email = email + nomes[i];
+					}
+					email += "@caspokewigs.com";
+					c.setEmail(email);
+				}
 		dao.altera(c);
 		return "redirect:listaClientes";
 	}

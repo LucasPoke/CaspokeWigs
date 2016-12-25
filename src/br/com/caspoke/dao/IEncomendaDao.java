@@ -12,4 +12,7 @@ public interface IEncomendaDao {
 	public void insere(Encomenda e);
 	public void remove(Encomenda e);
 	public void altera(Encomenda e);
+	public Object listaConcluidas();
+	public Object listaEmAndamento();
+	public Object listaEnviadas();
 }

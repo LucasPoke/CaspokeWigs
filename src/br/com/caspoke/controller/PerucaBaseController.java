@@ -1,5 +1,7 @@
 package br.com.caspoke.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.caspoke.dao.IEncomendaDao;
 import br.com.caspoke.dao.IPerucaBaseDao;
 import br.com.caspoke.dao.IPerucaDao;
-import br.com.caspoke.model.Peruca;
+import br.com.caspoke.model.Encomenda;
 import br.com.caspoke.model.PerucaBase;
+import br.com.caspoke.model.StatusEncomenda;
 
 @Controller
 @Transactional
@@ -25,6 +29,9 @@ public class PerucaBaseController {
 	@Autowired
 	@Qualifier("jpaPerucaBaseDao")
 	private IPerucaBaseDao dao;
+	@Autowired
+	@Qualifier("jpaEncomendaDao")
+	private IEncomendaDao encomendaDao;
 	
 	@RequestMapping("novaPerucaBase")
 	public String form(long id, Model model) {
@@ -68,10 +75,37 @@ public class PerucaBaseController {
 	}
 	
 	//ESSE METODO DEVE, NO FUTURO, MUDAR AUTOMATICAMENTE O STATUS DA ENCOMENDA ASSOCIADA PARA "EM DESENVOLVIMENTO"
+	//A SER TESTADO
 	@RequestMapping("atualizaChegada")
 	public void atualizaChegada(long id) {
 		PerucaBase p = dao.buscaPorId(id);
 		p.setChegou(true);
 		dao.altera(p);
+		
+		Encomenda e = p.getEncomenda();
+		if (e != null)
+		{
+			boolean todasChegaram = true;
+			List<PerucaBase> perucas = e.getPerucasBase();
+			if (perucas != null)
+			{
+				for (int i = 0; i < perucas.size(); i++)
+				{
+					if (!perucas.get(i).isChegou())
+					{
+						System.out.println("Peruca de id " + perucas.get(i).getId() + "ainda não chegou na encomenda do personagem " + e.getOrcamento().getPersonagem());
+						todasChegaram = false;
+					}
+				}
+				if (todasChegaram)
+				{
+					e.setStatus(StatusEncomenda.EM_DESENVOLVIMENTO);
+					encomendaDao.altera(e);
+				}
+			}
+			else
+				System.out.println("array nulo dentro de encomenda, em PerucaBaseControler, atualizaChegada");
+		}
+		
 	}
 }

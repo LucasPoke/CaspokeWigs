@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.caspoke.dao.IClienteDao;
@@ -20,17 +21,23 @@ public class LoginController {
 		private IClienteDao dao;
 		
 		@RequestMapping("loginForm")
-		public String loginForm() {
+		public String loginForm(Model model) {
+			model.addAttribute("c", new Cliente());
 			return "formulario-login";
 		}
 		
 		@RequestMapping("efetuaLogin")
 		public String efetuaLogin(Cliente c, HttpSession session) {
-			Cliente cliente = dao.buscaPorLogin(c);
+			System.out.println("email: " + c.getEmail());
+			System.out.println("senha: " + c.getSenha());
+			Cliente cliente = dao.buscaPorEmail(c);
 			
 			if (cliente != null) {
 				session.setAttribute("usuarioLogado", cliente);
 				return "menu";
+			}
+			else {
+				System.out.println("Cliente não encontrado");
 			}
 			return "redirect:loginForm";
 		}
@@ -38,7 +45,7 @@ public class LoginController {
 		@RequestMapping("logout")
 		public String logout(HttpSession session) {
 			session.invalidate();
-			return "redirect:loginForm";
+			return "menu";
 		}
 		
 		@RequestMapping("menu")

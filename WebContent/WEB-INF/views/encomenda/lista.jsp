@@ -23,20 +23,24 @@
 
   <br /> <br />        
 
-	<c:forEach items="${encomendas}" var="e">
+	<div style="width:800px">
+	<h3>Encomendas Em Andamento</h3>
+	<c:forEach items="${encomendasEmAndamento}" var="e">
 		<table>
 			<tr>
 				<th>Personagem:</th>
 				<td>${e.orcamento.personagem}</td>
+				<td><a href="mostraEncomenda?id=${e.id}">Alterar</a></td>
 			</tr>
 			<tr>
 				<th>Preço:</th>
 				<td>${e.preco}</td>
+				<td><a href="removeEncomenda?id=${e.id}">Remover</a></td>
 			</tr>
 			<!-- linhda de deadline aqui (se não enviado) -->
 			<tr>
 				<th>Descrição:</th>
-				<td>${e.orcamento.comentarios}</td>
+				<td colspan="2">${e.orcamento.comentarios}</td>
 			</tr>
 		</table>
 		<div id="accordion_${e.id}">
@@ -47,6 +51,8 @@
 						<!--  Endereco -->
 						<th>Frete:</th>
 						<td>R$${e.frete}</td>
+					</tr>
+					<tr>
 						<th>Rastreio:</th>
 						<td>${e.rastreio_br}</td>
 					</tr>
@@ -59,6 +65,99 @@
 		</div>
 		
 	</c:forEach>
+	</div>
+	
+	
+	<br /><br />
+	<div style="width:800px">
+	<h3>Encomendas Concluídas</h3>
+	<c:forEach items="${encomendasConcluidas}" var="e">
+		<table>
+			<tr>
+				<th>Personagem:</th>
+				<td>${e.orcamento.personagem}</td>
+				<td><a href="mostraEncomenda?id=${e.id}">Alterar</a></td>
+			</tr>
+			<tr>
+				<th>Preço:</th>
+				<td>${e.preco}</td>
+				<td><a href="removeEncomenda?id=${e.id}">Remover</a></td>
+			</tr>
+			<!-- linhda de deadline aqui (se não enviado) -->
+			<tr>
+				<th>Descrição:</th>
+				<td colspan="2">${e.orcamento.comentarios}</td>
+			</tr>
+		</table>
+		<div id="accordion_${e.id}">
+			<h3>Envio</h3>
+			<div>
+				<table>
+					<tr>
+						<!--  Endereco -->
+						<th>Frete:</th>
+						<td>R$${e.frete}</td>
+					</tr>
+					<tr>
+						<th>Rastreio:</th>
+						<td>${e.rastreio_br}</td>
+					</tr>
+				</table>
+			</div>
+			<h3>Perucas base</h3>
+			<div>
+				A implementar
+			</div>
+		</div>
+		
+	</c:forEach>
+	</div>
+	
+	
+	<br /><br />
+	<div style="width:800px">
+	<h3>Encomendas Enviadas</h3>
+	<c:forEach items="${encomendasEnviadas}" var="e">
+		<table>
+			<tr>
+				<th>Personagem:</th>
+				<td>${e.orcamento.personagem}</td>
+				<td><a href="mostraEncomenda?id=${e.id}">Alterar</a></td>
+			</tr>
+			<tr>
+				<th>Preço:</th>
+				<td>${e.preco}</td>
+				<td><a href="removeEncomenda?id=${e.id}">Remover</a></td>
+			</tr>
+			<!-- linhda de deadline aqui (se não enviado) -->
+			<tr>
+				<th>Descrição:</th>
+				<td colspan="2">${e.orcamento.comentarios}</td>
+			</tr>
+		</table>
+		<div id="accordion_${e.id}">
+			<h3>Envio</h3>
+			<div>
+				<table>
+					<tr>
+						<!--  Endereco -->
+						<th>Frete:</th>
+						<td>R$${e.frete}</td>
+					</tr>
+					<tr>
+						<th>Rastreio:</th>
+						<td>${e.rastreio_br}</td>
+					</tr>
+				</table>
+			</div>
+			<h3>Perucas base</h3>
+			<div>
+				A implementar
+			</div>
+		</div>
+		
+	</c:forEach>
+	</div>
 	<!-- 
 		<table id="tabelaEncomendas">
 	  <tr>

@@ -23,13 +23,14 @@ public class Cliente {
 	private long id;
 	@Column(nullable = false)
 	private String nome;
+	@Column(nullable = false, unique=true)
 	private String email;
 	@Temporal(TemporalType.DATE) //informa como salvar no banco
 	@DateTimeFormat(pattern="dd/MM/yyyy") //para o Spring popular o Calendar
 	private Calendar data;
-	@Column(nullable = false, unique = true)
-	private String login;
+	@Column(nullable = false)
 	private String senha;
+	private String permissao;
 	@OneToMany(mappedBy="cliente", targetEntity=Orcamento.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Orcamento> orcamentos;
 	
@@ -59,17 +60,23 @@ public class Cliente {
 		this.data = data;
 	}
 	
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
 	public String getSenha() {
 		return senha;
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public List<Orcamento> getOrcamentos() {
+		return orcamentos;
+	}
+	public void setOrcamentos(List<Orcamento> orcamentos) {
+		this.orcamentos = orcamentos;
+	}
+	public String getPermissao() {
+		return permissao;
+	}
+	public void setPermissao(String permissao) {
+		this.permissao = permissao;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package br.com.caspoke.dao.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,31 @@ public class JpaPerucaBaseDao implements IPerucaBaseDao {
 		return manager.createQuery("select p from PerucaBase p").getResultList();
 	}
 
+	//MELHORAR ESSA BUSCA
+	public List<PerucaBase> listaAssociadas() {
+		List<PerucaBase> todas = manager.createQuery("select p from PerucaBase p").getResultList();
+		List<PerucaBase> perucas = new ArrayList();
+		for (int i = 0; i < todas.size(); i++)
+		{
+			if (todas.get(i).getEncomenda() != null)
+				perucas.add(todas.get(i));
+		}
+		return perucas;
+	}
+
+	//MELHORAR ESSA BUSCA
+	public List<PerucaBase> listaNaoAssociadas() {
+		List<PerucaBase> todas = manager.createQuery("select p from PerucaBase p").getResultList();
+		List<PerucaBase> perucas = new ArrayList();
+		for (int i = 0; i < todas.size(); i++)
+		{
+			if (todas.get(i).getEncomenda() == null)
+				perucas.add(todas.get(i));
+		}
+		return perucas;
+	}
+
+	
 	public PerucaBase buscaPorId(long id) {
 		return manager.find(PerucaBase.class, id);
 	}

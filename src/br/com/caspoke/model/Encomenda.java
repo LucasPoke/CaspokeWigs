@@ -28,17 +28,22 @@ public class Encomenda {
 	private BigDecimal preco;
 	private BigDecimal frete;
 	private String rastreio_br;
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar data_pagamento;
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar data_final;
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar data_envio;
+	
 	@Column(nullable = false)
 	private StatusEncomenda status;
+	private int tempoConfeccao; //em Semanas
 	@OneToMany(mappedBy = "encomenda")
 	private List<PerucaBase> perucasBase;
 	
@@ -95,6 +100,18 @@ public class Encomenda {
 	}
 	public void setData_envio(Calendar data_envio) {
 		this.data_envio = data_envio;
+	}
+	public int getTempoConfeccao() {
+		return tempoConfeccao;
+	}
+	public void setTempoConfeccao(int tempoConfeccao) {
+		this.tempoConfeccao = tempoConfeccao;
+	}
+	public List<PerucaBase> getPerucasBase() {
+		return perucasBase;
+	}
+	public void setPerucasBase(List<PerucaBase> perucasBase) {
+		this.perucasBase = perucasBase;
 	}
 	
 	

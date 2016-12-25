@@ -20,6 +20,15 @@ public class JpaEncomendaDao implements IEncomendaDao {
 		return manager.createQuery("select e from Encomenda e").getResultList();
 	}
 
+	public List<Encomenda> listaConcluidas() {
+		return manager.createQuery("select e from Encomenda e where status = 'CONCLUIDO'").getResultList();
+	}
+	public List<Encomenda> listaEnviadas() {
+		return manager.createQuery("select e from Encomenda e where status = 'ENVIADO'").getResultList();
+	}
+	public List<Encomenda> listaEmAndamento() {
+		return manager.createQuery("select e from Encomenda e where status != 'CONCLUIDO' and status != 'ENVIADO'").getResultList();
+	}
 	public Encomenda buscaPorId(long id) {
 		return manager.find(Encomenda.class, id);
 	}

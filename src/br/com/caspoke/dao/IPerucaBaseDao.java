@@ -9,6 +9,8 @@ import br.com.caspoke.model.PerucaBase;
 public interface IPerucaBaseDao {
 	
 	public List<PerucaBase> lista();
+	public List<PerucaBase> listaAssociadas();
+	public List<PerucaBase> listaNaoAssociadas();
 	public PerucaBase buscaPorId(long id);
 	public void insere(PerucaBase p);
 	public void remove(PerucaBase p);

@@ -54,4 +54,10 @@ public class PerucaBase {
 	public void setChegou(boolean chegou) {
 		this.chegou = chegou;
 	}
+	public Encomenda getEncomenda() {
+		return encomenda;
+	}
+	public void setEncomenda(Encomenda encomenda) {
+		this.encomenda = encomenda;
+	}
 }

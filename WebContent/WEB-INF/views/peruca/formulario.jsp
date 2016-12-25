@@ -4,17 +4,21 @@
 
 <html>
 	<head>
-    	<link href="css/jquery.css" rel="stylesheet">
-    	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    	<script src="js/jquery-ui.js"></script>
-    	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  		
-  		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>  
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CaspokeWigs</title>
+		<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  	<link href="resources/css/caspokewigs.css" media="all" rel="stylesheet" type="text/css" />
+	  	
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  	<script src="https://use.fontawesome.com/126680faf3.js"></script>
+	
 		<script type="text/javascript">  
 		$(document).ready(function(){  
 		
-		    var input = '<label><input type="text" name="cor" /> <a href="#" class="remove">X</a><br /></label>';  
+		    var input = '<label><input type="text" name="cor" /><a href="#" class="remove">X</a><br /></label><br />';  
 		    $("input[name='add']").click(function( e ){  
 		        $('#cores_adicionais').append( input );  
 		        console.log("ADICIONOU COR");
@@ -50,6 +54,7 @@
   	</head>
   
   <body>
+  	<c:import url="/WEB-INF/views/cabecalho.jsp"/>
     <h3>Adicionar peruca</h3>
     
     <form action="adicionaPerucaESolicitaImagem" id="formAdiciona" method="post">

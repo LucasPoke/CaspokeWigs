@@ -33,9 +33,9 @@ public class JpaClienteDao implements IClienteDao {
 		return manager.find(Cliente.class, id);
 	}
 
-	public Cliente buscaPorLogin(Cliente c) {
-		Query q = manager.createQuery("select c from Cliente as c where c.login = :login and c.senha = :senha");
-		q.setParameter("login", c.getLogin());
+	public Cliente buscaPorEmail(Cliente c) {
+		Query q = manager.createQuery("select c from Cliente as c where c.email = :email and c.senha = :senha");
+		q.setParameter("email", c.getEmail());
 		q.setParameter("senha", c.getSenha());
 		
 		List<Cliente> resultado = q.getResultList();
