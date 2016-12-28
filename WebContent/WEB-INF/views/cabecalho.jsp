@@ -24,6 +24,7 @@
 		      		<c:if test="${not empty usuarioLogado}">
 			        	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown""><span class="glyphicon glyphicon-user"></span> Olá, ${usuarioLogado.nome}</a>
 			        		<ul class="dropdown-menu">
+			        			<li><a href="logout">Meus pedidos</a></li>
 			        			<li><a href="logout">Sair do sistema</a></li>
 			        		</ul>
 			        	</li>

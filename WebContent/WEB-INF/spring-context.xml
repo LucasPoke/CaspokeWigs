@@ -16,29 +16,28 @@
     http://www.springframework.org/schema/oxm
     http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
 
+	<!--  AGORA FEITO PELA CLASSE APPCONFIG
   	<context:component-scan base-package="br.com.caspoke" />
   	<mvc:annotation-driven />
-
+	-->
+	
+	<!--  AGORA FEITO PELA CLASSE APPCONFIG
   	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/views/"/>
     	<property name="suffix" value=".jsp"/>
  	</bean>
-
-	<mvc:default-servlet-handler/>
-	
-	<mvc:interceptors>
-    	<bean class="br.com.caspoke.interceptor.AutorizadorInterceptor" />
- 	</mvc:interceptors>
- 	
+ 	 -->
+ 	 
+ 	<!-- AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
  	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 	    <property name="url" value="jdbc:mysql://localhost/CaspokeWigs"/>
 	    <property name="username" value="root"/>
 	    <property name="password" value="Caspoke10!"/>
 	</bean>
+ 	-->
 
-
-	<!-- gerenciamento de jpa pelo spring -->
+	<!-- gerenciamento de jpa pelo spring , AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
 	<bean id="entityManagerFactory" 
 	    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 	  <property name="dataSource" ref="mysqlDataSource" />
@@ -46,22 +45,19 @@
 	    <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 	  </property>
 	</bean>
+	-->
 	
-	<!-- gerenciamento da transação pelo spring -->
+	<!-- gerenciamento da transação pelo spring, AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
+
 	<bean id="transactionManager" 
 	        class="org.springframework.orm.jpa.JpaTransactionManager">
 	  <property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>  
 	
 	<tx:annotation-driven/>
-
+	-->
 
 	<!-- upload de imagens -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -70,8 +66,6 @@
 		<property name="maxUploadSize" value="1000000" />
 
 	</bean>
-
-	<context:component-scan base-package="com.journaldev.spring.controller" />
 
 </beans>
 

@@ -34,7 +34,7 @@ public class LoginController {
 			
 			if (cliente != null) {
 				session.setAttribute("usuarioLogado", cliente);
-				return "menu";
+				return "redirect:menu";
 			}
 			else {
 				System.out.println("Cliente não encontrado");

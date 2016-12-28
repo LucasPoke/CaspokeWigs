@@ -48,14 +48,11 @@
 				    	</div>
 				    	<c:if test="${usuarioLogado.permissao=='TOTAL'}">
 				    		<div class="form-group">
-				    		<label class="control-label col-sm-2" for="data_cadastro">Data de cadastro</label>
-				    		<div class="col-sm-10">
-				    			<caspoke:campoData id="data_cadastro" /><br />
+					    		<label class="control-label col-sm-2" for="data_cadastro">Data de cadastro</label>
+					    		<div class="col-sm-10">
+					    			<caspoke:campoData id="data_cadastro" /><br />
+					    		</div>
 				    		</div>
-				    	</div>
-				    	</c:if> 
-				    	
-				    	<c:if test="${usuarioLogado.permissao=='TOTAL'}">
 					    	<div class="form-group">
 					    		<label class="control-label col-sm-2">Permissao</label>
 							    <div class="col-sm-10">

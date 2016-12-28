@@ -13,4 +13,7 @@ public interface IClienteDao {
 	public void insere(Cliente c);
 	public void remove(Cliente c);
 	public void altera(Cliente c);
+	
+	public Cliente buscaPorSSO(String sso);
+	public void removePorSSO(String sso);
 }
