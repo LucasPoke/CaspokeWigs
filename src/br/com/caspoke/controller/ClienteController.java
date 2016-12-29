@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.caspoke.dao.IClienteDao;
 import br.com.caspoke.model.Cliente;
+import br.com.caspoke.model.PersistentLogin;
 import br.com.caspoke.springmvc.service.ClienteProfileService;
 import br.com.caspoke.springmvc.service.ClienteService;
+import br.com.caspoke.springmvc.service.PersistentLoginService;
 
 @Controller
 @Transactional
@@ -37,6 +39,9 @@ public class ClienteController {
 	
 	@Autowired
     ClienteProfileService clienteProfileService;
+	
+	@Autowired
+	PersistentLoginService persistentLoginService;
 	
 	@Autowired
     MessageSource messageSource;
@@ -81,7 +86,10 @@ public class ClienteController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
             //new SecurityContextLogoutHandler().logout(request, response, auth);
-            persistentTokenBasedRememberMeServices.logout(request, response, auth);
+        	if (persistentLoginService.existeSSO(auth.getName()))
+        	{
+        		persistentTokenBasedRememberMeServices.logout(request, response, auth);
+        	}
             SecurityContextHolder.getContext().setAuthentication(null);
         }
         return "redirect:menu?logout";
