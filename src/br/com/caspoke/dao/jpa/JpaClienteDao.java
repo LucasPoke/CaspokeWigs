@@ -58,4 +58,19 @@ public class JpaClienteDao implements IClienteDao {
 		manager.merge(c);
 	}
 
+	public Cliente buscaPorSSO (String sso) {
+		Query q = manager.createQuery("select c from Cliente as c where c.ssoId = :sso");
+		q.setParameter("sso", sso);
+		
+		List<Cliente> resultado = q.getResultList();
+		if (resultado.size() > 0)
+			return resultado.get(0);
+		else
+			return null;
+	}
+	
+	public void removePorSSO (String sso) {
+		Cliente c = buscaPorSSO(sso);
+		manager.remove(c);
+	}
 }

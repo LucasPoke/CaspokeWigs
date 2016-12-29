@@ -77,8 +77,7 @@
 				</c:if>
 				<c:if test="${not empty perucas}">
 				<form action="solicitaImagem" method="post">
-					
-					<table id="tabelaPerucas">
+					<table id="tabelaPerucas" class="table">
 						<c:forEach items="${perucas}" var="p">
 							<tr id="peruca_${p.id}">
 					   			<td rowspan="5"><input type="checkbox" name="selecao" value="${p.id}::${p.cor}" /></td>	

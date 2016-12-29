@@ -4,52 +4,44 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.caspoke.dao.IClienteDao;
 import br.com.caspoke.model.Cliente;
+import br.com.caspoke.springmvc.service.ClienteProfileService;
+import br.com.caspoke.springmvc.service.ClienteService;
 
 @Controller
 @Transactional
 public class LoginController {
 
-		@Autowired
-		@Qualifier("jpaClienteDao")
-		private IClienteDao dao;
-		
-		@RequestMapping("loginForm")
-		public String loginForm(Model model) {
-			model.addAttribute("c", new Cliente());
-			return "formulario-login";
-		}
-		
-		@RequestMapping("efetuaLogin")
-		public String efetuaLogin(Cliente c, HttpSession session) {
-			System.out.println("email: " + c.getEmail());
-			System.out.println("senha: " + c.getSenha());
-			Cliente cliente = dao.buscaPorEmail(c);
-			
-			if (cliente != null) {
-				session.setAttribute("usuarioLogado", cliente);
-				return "menu";
-			}
-			else {
-				System.out.println("Cliente não encontrado");
-			}
-			return "redirect:loginForm";
-		}
-		
-		@RequestMapping("logout")
-		public String logout(HttpSession session) {
-			session.invalidate();
+		@RequestMapping(value = {"/", "menu"}, method = RequestMethod.GET)
+		public String menu(Model model) {
+			model.addAttribute("loggedinuser", getPrincipal());
 			return "menu";
 		}
 		
-		@RequestMapping("menu")
-		public String menu() {
-			return "menu";
-		}
+		
+		//retorna Principal (nome de usuário) do cliente logado
+		private String getPrincipal(){
+	        String userName = null;
+	        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	 
+	        if (principal instanceof UserDetails) {
+	            userName = ((UserDetails)principal).getUsername();
+	        } else {
+	            userName = principal.toString();
+	        }
+	        return userName;
+	    }
 }

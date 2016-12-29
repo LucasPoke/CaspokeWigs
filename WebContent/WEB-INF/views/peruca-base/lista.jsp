@@ -44,60 +44,72 @@
 
 <body>
 	<c:import url="/WEB-INF/views/cabecalho.jsp"/>
-  	<a href="logout">Sair do sistema</a><br />
-  	<a href="menu">Voltar ao menu principal</a><br />
 
-  <h2>Perucas base</h2>
-  <table id="tabelaPerucasBase">
-  <c:forEach items="${perucas}" var="p">
-    <tr id="peruca_${p.id}">
-    	<tr>
-    		<td rowspan="5"><a href="${p.peruca.link}"><img src="<c:url value="/resources/imagens/perucas/${p.peruca.id}.jpg"/>" height="150"/></a></td>
-      		<th>Preço</th>
-      		<td>$${p.peruca.preco}</td>
-      		<td><a href="mostraPerucaBase?id=${p.id}">Alterar</a></td>
-      		<td>
-      	</tr>
-      	<tr>
-      		<th>Tamanho</th>
-      		<td>${p.peruca.tamanho}cm</td>
-      		<td><a href="removePerucaBase?id=${p.id}">Remover</a></td>
-      	</tr>
-      	<tr>
-      		<th>Peso</th>
-      		<c:if test="${p.peruca.peso == 0}">
-      			<td>-</td>
-      		</c:if>
-      		<c:if test="${p.peruca.peso > 0}">
-      			<td>${p.peruca.peso}g</td>
-      		</c:if>
-      		<th>Quantidade:</th>
-      		<td>${p.quantidade}</td>
-      	</tr>
-      	<tr>
-      		<th>Cor</th>
-      		<td>${p.peruca.cor}</td>
-      		<th>Rastreio:</th>
-      		<c:if test="${empty p.rastreio}">
-      			<td>Rastreio não disponível</td>
-      		</c:if>
-      		<c:if test="${not empty p.rastreio}">
-      			<td><a href="http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=${p.rastreio}">${p.rastreio}</a></td>
-      		</c:if>
-      	</tr>
-      	<tr>
-      		<th>Local</th>
-      		<td>${p.peruca.local}:${p.peruca.vendedor}</td>
-      		<td></td>
-      		<c:if test="${p.chegou}">
-      			<th>Peruca em mãos!</th>
-      		</c:if>
-      		<c:if test="${not p.chegou}">
-      			<th id="chegada"><button id="${p.id}">Notificar chegada</button></th>
-      		</c:if>
-      	</tr>
-  </c:forEach>
-  </table>
-  
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<h2>Filtros de pesquisa</h2>
+				<p>Aqui vão ficar filtros de busca</p>
+			</div>
+			<div class="col-sm-8">
+				<h2> Resultado</h2>
+				<c:if test="${empty perucas}">
+					<p>Infelizmente não foram encontradas perucas que satisfazem os filtros selecionados.</p>
+				</c:if>
+				<c:if test="${not empty perucas}">
+ 					<table id="tabelaPerucasBase" class="table">
+  						<c:forEach items="${perucas}" var="p">
+						    <tr id="peruca_${p.id}">
+						    	<tr>
+						    		<td rowspan="5"><a href="${p.peruca.link}"><img src="<c:url value="/resources/imagens/perucas/${p.peruca.id}.jpg"/>" height="150"/></a></td>
+						      		<th>Preço</th>
+						      		<td>$${p.peruca.preco}</td>
+						      		<td><a href="mostraPerucaBase?id=${p.id}">Alterar</a></td>
+						      		<td>
+						      	</tr>
+						      	<tr>
+						      		<th>Tamanho</th>
+						      		<td>${p.peruca.tamanho}cm</td>
+						      		<td><a href="removePerucaBase?id=${p.id}">Remover</a></td>
+						      	</tr>
+						      	<tr>
+						      		<th>Peso</th>
+						      		<c:if test="${p.peruca.peso == 0}">
+						      			<td>-</td>
+						      		</c:if>
+						      		<c:if test="${p.peruca.peso > 0}">
+						      			<td>${p.peruca.peso}g</td>
+						      		</c:if>
+						      		<th>Quantidade:</th>
+						      		<td>${p.quantidade}</td>
+						      	</tr>
+						      	<tr>
+						      		<th>Cor</th>
+						      		<td>${p.peruca.cor}</td>
+						      		<th>Rastreio:</th>
+						      		<c:if test="${empty p.rastreio}">
+						      			<td>Rastreio não disponível</td>
+						      		</c:if>
+						      		<c:if test="${not empty p.rastreio}">
+						      			<td><a href="http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=${p.rastreio}">${p.rastreio}</a></td>
+						      		</c:if>
+						      	</tr>
+						      	<tr>
+						      		<th>Local</th>
+						      		<td>${p.peruca.local}:${p.peruca.vendedor}</td>
+						      		<td></td>
+						      		<c:if test="${p.chegou}">
+						      			<th>Peruca em mãos!</th>
+						      		</c:if>
+						      		<c:if test="${not p.chegou}">
+						      			<th id="chegada"><button id="${p.id}">Notificar chegada</button></th>
+						      		</c:if>
+						      	</tr>
+						  </c:forEach>
+						  </table>
+  					</c:if>
+  				</div>
+  			</div>
+  		</div>
 </body>
 </html>
