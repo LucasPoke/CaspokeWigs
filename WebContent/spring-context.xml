@@ -16,28 +16,27 @@
     http://www.springframework.org/schema/oxm
     http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
 
-	<!--  AGORA FEITO PELA CLASSE APPCONFIG
   	<context:component-scan base-package="br.com.caspoke" />
   	<mvc:annotation-driven />
-	-->
-	
-	<!--  AGORA FEITO PELA CLASSE APPCONFIG
+
+	<!--  declaracao do View Resolver (AGORA NO APPCONFIG)
   	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/views/"/>
     	<property name="suffix" value=".jsp"/>
  	</bean>
- 	 -->
- 	 
- 	<!-- AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
+ 	-->
+	<mvc:default-servlet-handler/>
+ 	
+ 	<!-- criação do data source (AGORA NO HIBERNATECONFIGURATION)
  	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 	    <property name="url" value="jdbc:mysql://localhost/CaspokeWigs"/>
 	    <property name="username" value="root"/>
 	    <property name="password" value="Caspoke10!"/>
 	</bean>
- 	-->
+	-->
 
-	<!-- gerenciamento de jpa pelo spring , AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
+	<!-- gerenciamento de jpa pelo spring -->
 	<bean id="entityManagerFactory" 
 	    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 	  <property name="dataSource" ref="mysqlDataSource" />
@@ -45,17 +44,15 @@
 	    <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 	  </property>
 	</bean>
-	-->
 	
-	<!-- gerenciamento da transação pelo spring, AGORA FEITO PELA CLASSE HIBERNATECONFIGURATION
-
+	<!-- gerenciamento da transação pelo spring (AGORA NO HIBERNATECONFIGURATION)
 	<bean id="transactionManager" 
 	        class="org.springframework.orm.jpa.JpaTransactionManager">
 	  <property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>  
 	
 	<tx:annotation-driven/>
-	-->
+	 -->
 
 	<!-- upload de imagens -->
 
@@ -68,4 +65,3 @@
 	</bean>
 
 </beans>
-

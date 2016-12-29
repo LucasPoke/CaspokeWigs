@@ -2,9 +2,10 @@ package br.com.caspoke.springmvc.configuration;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
- 
-import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,19 +13,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
  
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "br.com.caspoke.springmvc.configuration" })
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = { "classpath:/main/resources/application.properties" })
 public class HibernateConfiguration {
  
     @Autowired
     private Environment environment;
- 
+    /*
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -33,7 +36,28 @@ public class HibernateConfiguration {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
      }
+    
+    
      
+    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory s) {
+       HibernateTransactionManager txManager = new HibernateTransactionManager();
+       txManager.setSessionFactory(s);
+       return txManager;
+    }
+    */
+    
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+        properties.put("hibernate.connection.charSet", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        return properties;        
+    }
+    
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -44,21 +68,33 @@ public class HibernateConfiguration {
         return dataSource;
     }
      
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-        properties.put("hibernate.connection.charSet", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        return properties;        
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        //hibernateJpaVendorAdapter.setShowSql(true);
+        //hibernateJpaVendorAdapter.setGenerateDdl(true);
+        //hibernateJpaVendorAdapter.setDatabase(Database.H2);
+        return hibernateJpaVendorAdapter;
     }
-     
+
+    @Bean
+    @Autowired //coloquei
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+        LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
+        lef.setDataSource(dataSource);
+        lef.setJpaVendorAdapter(jpaVendorAdapter);
+        lef.setPackagesToScan("br.com.caspoke.model");
+        lef.setPersistenceUnitName("CaspokeWigsPU");
+        lef.setJpaProperties(hibernateProperties());
+        lef.afterPropertiesSet();
+        return lef.getObject();
+    }
+    
     @Bean
     @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory s) {
-       HibernateTransactionManager txManager = new HibernateTransactionManager();
-       txManager.setSessionFactory(s);
-       return txManager;
+    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+    	JpaTransactionManager jtm = new JpaTransactionManager();
+    	jtm.setEntityManagerFactory(emf);
+       return jtm;
     }
 }

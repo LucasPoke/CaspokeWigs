@@ -21,7 +21,7 @@ import br.com.caspoke.model.Cliente;
 import br.com.caspoke.model.ClienteProfile;
  
  
-@Service("customUserDetailsService")
+@Service("clienteDetailsService")
 public class ClienteDetailsService implements UserDetailsService{
  
     static final Logger logger = LoggerFactory.getLogger(ClienteDetailsService.class);
