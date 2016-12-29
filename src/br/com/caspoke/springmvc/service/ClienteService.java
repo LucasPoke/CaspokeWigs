@@ -31,7 +31,7 @@ public class ClienteService {
         return c;
     }
  
-    public void saveUser(Cliente c) {
+    public void insere(Cliente c) {
         c.setSenha(passwordEncoder.encode(c.getSenha()));
         dao.insere(c);
     }
@@ -41,7 +41,7 @@ public class ClienteService {
      * Just fetch the entity from db and update it with proper values within transaction.
      * It will be updated in db once transaction ends. 
      */
-    public void updateUser(Cliente c) {
+    public void atualiza(Cliente c) {
         Cliente entity = dao.buscaPorId(c.getId());
         if(entity!=null){
             entity.setSsoId(c.getSsoId());
@@ -57,11 +57,11 @@ public class ClienteService {
     }
  
      
-    public void deleteUserBySSO(String sso) {
+    public void removePorSSO(String sso) {
         dao.removePorSSO(sso);
     }
  
-    public List<Cliente> findAllUsers() {
+    public List<Cliente> lista() {
         return dao.lista();
     }
  

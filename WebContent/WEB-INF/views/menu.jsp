@@ -20,8 +20,16 @@
   	<body>
   		<c:import url="/WEB-INF/views/cabecalho.jsp"/>
   		<div class="container">
-	    	<h2>Página inicial do CaspokeWigs</h2>
-		    <p>Bem vindo, ${usuarioLogado.nome}</p> <br />
+	    	<c:if test="${param.logout != null}">
+	    		<div class="alert alert-success">
+	    			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  					<p>Logout feito com sucesso!</p>
+				</div>
+			</c:if>
+			
+			<h2>Página inicial do CaspokeWigs</h2>
+	    	
+		    <p>Bem vindo, ${loggedinuser}</p> <br />
 		    <a href="listaClientes">Clique aqui</a> para administrar Clientes<br />
 		    <a href="listaPerucas">Clique aqui</a> para administrar Perucas<br />
 		    <a href="listaPerucasBase">Clique aqui</a> para administrar Perucas Base<br />
@@ -29,7 +37,6 @@
 		    <a href="listaOrcamentos">Clique aqui</a> para administrar Orcamentos<br />
 		    <a href="listaEncomendas">Clique aqui</a> para administrar Encomendas<br />
 		    <br /><br /><br /><br />
-		    
 		    <a href="testeCores">BUSCAR POR CORES NÃO CADASTRADAS</a><br />
 		</div>
   	</body>

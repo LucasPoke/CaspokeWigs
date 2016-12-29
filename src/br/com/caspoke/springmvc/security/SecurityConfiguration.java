@@ -30,7 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(clienteDetailsService);
+		auth.inMemoryAuthentication().withUser("caspoke").password("admin").roles("NORMAL", "PARCIAL", "TOTAL");
+        auth.userDetailsService(clienteDetailsService);	
         auth.authenticationProvider(authenticationProvider());
     }
 	
@@ -45,8 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	                .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
 	                .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	        */
-	        http.authorizeRequests().antMatchers("/")
-	        	.access("hasRole('NORMAL') or hasRole('PARCIAL') or hasRole('TOTAL')");
+	        http.authorizeRequests()
+	        	.antMatchers("/").access("hasRole('NORMAL') or hasRole('PARCIAL') or hasRole('TOTAL')")
+	        	.antMatchers("/listaPerucas").access("hasRole('TOTAL') or hasRole('PARCIAL')")
+	        	.and().formLogin().loginPage("/login")
+                .usernameParameter("ssoId").passwordParameter("senha").and()
+                .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+                .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	    }
 	 
 	 	@Bean

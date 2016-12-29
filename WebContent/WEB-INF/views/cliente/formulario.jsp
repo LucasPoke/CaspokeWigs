@@ -28,50 +28,71 @@
 			<h2>Cadastro</h2>
 		  		<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
 				    <form:form class="form-horizontal" modelAttribute="cliente" action="adicionaCliente" method="post">
+				    	<form:input type="hidden" path="id" id="id"/>
+				    	
 				    	<div class="form-group">
 				    		<label class="control-label col-sm-2" for="nome">Nome</label>
 	   						<div class="col-sm-10">
-	      						<input type="text" class="form-control" id="nome" name="nome" placeholder="Inserir nome">
+	      						<form:input type="text" class="form-control" id="nome" path="nome" placeholder="Inserir nome" />
 	    					</div>
 				    	</div>
 				    	<div class="form-group">
 				    		<label class="control-label col-sm-2" for="email">Email</label>
 	   						<div class="col-sm-10">
-	      						<input type="text" class="form-control" id="email" name="email" placeholder="Inserir email" value="${c.email}">
+	      						<form:input type="text" class="form-control" id="email" path="email" placeholder="Inserir email" value="${c.email}" />
 	    					</div>
 				    	</div>
 				    	<div class="form-group">
 				    		<label class="control-label col-sm-2" for="senha">Senha</label>
 	   						<div class="col-sm-10">
-	      						<input type="password" class="form-control" id="senha" name="senha" placeholder="Inserir senha">
+	      						<form:input type="password" class="form-control" id="senha" path="senha" placeholder="Inserir senha" />
 	    					</div>
 				    	</div>
-				    	<c:if test="${usuarioLogado.permissao=='TOTAL'}">
-				    		<div class="form-group">
-					    		<label class="control-label col-sm-2" for="data_cadastro">Data de cadastro</label>
-					    		<div class="col-sm-10">
-					    			<caspoke:campoData id="data_cadastro" /><br />
-					    		</div>
+				    	
+				    	<div class="form-group">
+				    		<label class="control-label col-sm-2" for="ssoId">SSO Id</label>
+				    		<div class="col-sm-10">
+				    			<c:choose>
+                            		<c:when test="${edit}">
+                                		<form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" disabled="true"/>
+                            		</c:when>
+                            		<c:otherwise>
+                                		<form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" />
+                                		<div class="has-error">
+                                    		<form:errors path="ssoId" class="help-inline"/>
+                                		</div>
+                            		</c:otherwise>
+                       			</c:choose>
 				    		</div>
-					    	<div class="form-group">
-					    		<label class="control-label col-sm-2">Permissao</label>
-							    <div class="col-sm-10">
-							    	<div class="radio">
-							        	<form:radiobutton path="permissao" value="NORMAL" /> Normal
-							      	</div>
-							      	<div class="radio">
-							        	<label><form:radiobutton path="permissao" value="PARCIAL"/> Parcial</label>
-							      	</div>
-							      	<div class="radio">
-							        	<label><form:radiobutton path="permissao" value="TOTAL"/> Total</label>
-							      	</div>
-							    </div>
-							</div>
-						</c:if>	
+				    	</div>
+				    	
+				    	<div class="form-group">
+					    	<label class="control-label col-sm-2" for="data_cadastro">Data de cadastro</label>
+					    	<div class="col-sm-10">
+					    		<caspoke:campoData id="data" edit="${edit}"/><br />
+					    	</div>
+				    	</div>
+					    	
+					    <div class="form-group">
+					    	<label class="control-label col-sm-2" for="type">Permissao</label>
+							<div class="col-sm-10">
+                        		<form:select path="profiles" items="${roles}" multiple="true" itemValue="id" itemLabel="tipo" class="form-control input-sm" />
+                        		<div class="has-error">
+                            		<form:errors path="profiles" class="help-inline"/>
+                        		</div>
+                    		</div>
+						</div>
 						
 				    	<div class="form-group"> 
 						    <div class="col-sm-offset-2 col-sm-10">
-						    	<button type="submit" class="btn btn-default">Entrar no Sistema</button>
+						    	<c:choose>
+                        			<c:when test="${edit}">
+                            			<input type="submit" value="Atualizar" class="btn btn-primary btn-sm"/> ou <a href="<c:url value='menu' />">Cancel</a>
+                        			</c:when>
+                        			<c:otherwise>
+                            			<input type="submit" value="Cadastrar" class="btn btn-primary btn-sm"/> ou <a href="<c:url value='menu' />">Cancelar</a>
+                        			</c:otherwise>
+                    			</c:choose>
 						    </div>
 						</div>
 				    </form:form>

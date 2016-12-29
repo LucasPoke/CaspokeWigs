@@ -18,17 +18,19 @@
 			        </li>
 		      	</ul>
 		      	<ul class="nav navbar-nav navbar-right">
-		      		<c:if test="${empty usuarioLogado}">
-		      			<li><a href="loginForm"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>
-		      		</c:if>
-		      		<c:if test="${not empty usuarioLogado}">
-			        	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown""><span class="glyphicon glyphicon-user"></span> Olá, ${usuarioLogado.nome}</a>
-			        		<ul class="dropdown-menu">
-			        			<li><a href="logout">Meus pedidos</a></li>
-			        			<li><a href="logout">Sair do sistema</a></li>
-			        		</ul>
-			        	</li>
-			        </c:if>
+		      		<c:choose>
+		      			<c:when test="${loggedinuser.equals('anonymousUser')}">
+		      				<li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>
+		      			</c:when>
+		      			<c:otherwise>
+		      				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown""><span class="glyphicon glyphicon-user"></span> Olá, ${loggedinuser}</a>
+			        			<ul class="dropdown-menu">
+			        				<li><a href="logout">Meus pedidos</a></li>
+			        				<li><a href="logout">Sair do sistema</a></li>
+			        			</ul>
+			        		</li>
+			        	</c:otherwise>
+			        </c:choose>
 			        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
 			    </ul>
 		     </div>

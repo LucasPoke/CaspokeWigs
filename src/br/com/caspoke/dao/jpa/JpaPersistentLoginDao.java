@@ -54,12 +54,14 @@ public class JpaPersistentLoginDao implements PersistentTokenRepository {
  
     @Override
     public void removeUserTokens(String username) {
+    	
         logger.info("Removing Token if any for user : {}", username);
         Query q = manager.createQuery("Select p from PersistentLogin as p where p.username = :username");
         q.setParameter("username", username);
-        PersistentLogin persistentLogin = (PersistentLogin) q.getResultList();
+        PersistentLogin persistentLogin = (PersistentLogin)q.getSingleResult();
         
         if (persistentLogin != null) {
+        	System.out.println("TENTANDO REMOVER TOKENS DE " + username);
             logger.info("rememberMe was selected");
             manager.remove(persistentLogin);
         }

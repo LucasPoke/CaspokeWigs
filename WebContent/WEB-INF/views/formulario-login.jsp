@@ -25,29 +25,45 @@
 			<div class="row border-between">
 		  		<div class="col-sm-6">
 		  			<h2>Já tenho cadastro</h2>
-				    <form:form class="form-horizontal" modelAttribute="c" action="efetuaLogin" method="post">
+		  			<c:url var="loginUrl" value="/login" />
+				    <form:form class="form-horizontal" modelAttribute="cliente" action="${loginUrl}" method="post">
+				    	<c:if test="${param.error != null}">
+                            <div class="alert alert-danger">
+                            	<p>Nome de usuário ou senha inválido</p>
+                        	</div>
+                        </c:if>
 				    	<div class="form-group">
-				    		<label class="control-label col-sm-2" for="email">Email</label>
+				    		<label class="control-label col-sm-2" for="usuario">Usuário</label>
 	   						<div class="col-sm-10">
-	      						<input type="text" class="form-control" id="email" name="email" placeholder="Inserir email">
+	      						<form:input type="text" class="form-control" id="usuario" path="ssoId" placeholder="Inserir nome de usuário" />
 	    					</div>
 				    	</div>
 				    	<div class="form-group">
 				    		<label class="control-label col-sm-2" for="senha">Senha</label>
 	   						<div class="col-sm-10">
-	      						<input type="password" class="form-control" id="senha" name="senha" placeholder="Inserir senha">
+	      						<form:input type="password" class="form-control" id="senha" path="senha" placeholder="Inserir senha" />
 	    					</div>
 				    	</div>
+				    	<div class="form-group">
+				    		<div class="col-sm-offset-2 col-sm-10">
+					    		<div class="checkbox">
+                                	<label><input type="checkbox" id="rememberme" name="remember-me"> Lembrar</label>  
+                             	 </div>
+                            </div>
+                        </div>
 				    	<div class="form-group"> 
 						    <div class="col-sm-offset-2 col-sm-10">
 						    	<button type="submit" class="btn btn-default">Entrar no Sistema</button>
 						    </div>
 						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></strong>
 				    </form:form>
 		  		</div>
+		  		
+		  		
 		  		<div class="col-sm-6">
 		  			<h2>Não tenho cadastro</h2>
-		  			<form:form class="form-horizontal" modelAttribute="c" action="novoCliente" method="post">
+		  			<form:form class="form-horizontal" modelAttribute="cliente" action="novoCliente" method="post">
 		  				<div class="form-group">
 				    		<label class="control-label col-sm-2" for="email">Email</label>
 	   						<div class="col-sm-10">
