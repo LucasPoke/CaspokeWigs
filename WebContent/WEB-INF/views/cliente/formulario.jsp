@@ -1,8 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+        pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="caspoke" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,11 +26,12 @@
   	<body>
   		<div class="container">
 	  		<nav class="navbar navbar-inverse">
-				<p class="navbar-text">IdentificaÃ§Ã£o</p>
+				<p class="navbar-text">Identificação</p>
 			</nav>
 			<h2>Cadastro</h2>
 		  		<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
-				    <form:form class="form-horizontal" modelAttribute="cliente" action="adicionaCliente" method="post">
+				    
+				    <form:form class="form-horizontal" modelAttribute="cliente" action="adicionaCliente" method="post" accept-charset="UTF-8">
 				    	<form:input type="hidden" path="id" id="id"/>
 				    	
 				    	<div class="form-group">
@@ -43,14 +47,7 @@
 	    					</div>
 				    	</div>
 				    	<div class="form-group">
-				    		<label class="control-label col-sm-2" for="senha">Senha</label>
-	   						<div class="col-sm-10">
-	      						<form:input type="password" class="form-control" id="senha" path="senha" placeholder="Inserir senha" />
-	    					</div>
-				    	</div>
-				    	
-				    	<div class="form-group">
-				    		<label class="control-label col-sm-2" for="ssoId">SSO Id</label>
+				    		<label class="control-label col-sm-2" for="ssoId">Usuario</label>
 				    		<div class="col-sm-10">
 				    			<c:choose>
                             		<c:when test="${edit}">
@@ -65,23 +62,32 @@
                        			</c:choose>
 				    		</div>
 				    	</div>
-				    	
 				    	<div class="form-group">
-					    	<label class="control-label col-sm-2" for="data_cadastro">Data de cadastro</label>
-					    	<div class="col-sm-10">
-					    		<caspoke:campoData id="data" edit="${edit}"/><br />
-					    	</div>
+				    		<label class="control-label col-sm-2" for="senha">Senha</label>
+	   						<div class="col-sm-10">
+	      						<form:input type="password" class="form-control" id="senha" path="senha" placeholder="Inserir senha" />
+	    					</div>
 				    	</div>
-					    	
-					    <div class="form-group">
-					    	<label class="control-label col-sm-2" for="type">Permissao</label>
-							<div class="col-sm-10">
-                        		<form:select path="profiles" items="${roles}" multiple="true" itemValue="id" itemLabel="tipo" class="form-control input-sm" />
-                        		<div class="has-error">
-                            		<form:errors path="profiles" class="help-inline"/>
-                        		</div>
-                    		</div>
-						</div>
+				    	
+				    	
+				    	<sec:authorize access="hasRole('TOTAL')">
+					    	<div class="form-group">
+						    	<label class="control-label col-sm-2" for="data">Data de cadastro</label>
+						    	<div class="col-sm-10">
+						    		<caspoke:campoData id="data"/><br />
+						    	</div>
+					    	</div>
+						    	
+						    <div class="form-group">
+						    	<label class="control-label col-sm-2" for="type">Permissao</label>
+								<div class="col-sm-10">
+	                        		<form:select path="profiles" items="${roles}" multiple="true" itemValue="id" itemLabel="tipo" class="form-control input-sm" />
+	                        		<div class="has-error">
+	                            		<form:errors path="profiles" class="help-inline"/>
+	                        		</div>
+	                    		</div>
+							</div>
+						</sec:authorize>
 						
 				    	<div class="form-group"> 
 						    <div class="col-sm-offset-2 col-sm-10">

@@ -19,13 +19,15 @@
 		      	</ul>
 		      	<ul class="nav navbar-nav navbar-right">
 		      		<c:choose>
-		      			<c:when test="${loggedinuser.equals('anonymousUser')}">
+		      			<c:when test="${empty user}">
 		      				<li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>
 		      			</c:when>
 		      			<c:otherwise>
-		      				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown""><span class="glyphicon glyphicon-user"></span> Olá, ${loggedinuser}</a>
+		      				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown""><span class="glyphicon glyphicon-user"></span> Olá, ${user.nome}</a>
 			        			<ul class="dropdown-menu">
-			        				<li><a href="#">Meus pedidos</a></li>
+			        				<li><a href="listaOrcamentos">Meus orçamentos</a></li>
+			        				<li><a href="#">Minhas encomendas</a></li>
+			        				<li role="separator" class="divider"></li>
 			        				<li><a href="logout">Sair do sistema</a></li>
 			        			</ul>
 			        		</li>

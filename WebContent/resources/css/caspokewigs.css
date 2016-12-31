@@ -66,3 +66,11 @@ td
 .fill-space img {
 	margin-left: 0px;
 }
+
+.panel-inside-form {
+	padding: 10px;
+}
+
+.panel-inside-form button {
+	margin-top:10px;
+}

@@ -13,5 +13,5 @@ public interface IOrcamentoDao {
 	public void remove(Orcamento o);
 	public void altera(Orcamento o);
 	public List<Orcamento> listaAceitos();
-	
+	public List<Orcamento> listaEmEsperaPorCliente (long id);
 }

@@ -1,122 +1,102 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
-<head>
+	<head>
+		<title>CaspokeWigs</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  	<script src="https://use.fontawesome.com/126680faf3.js"></script>
+	  	
+	  	<link href="resources/css/caspokewigs.css" media="all" rel="stylesheet" type="text/css" />
+	  	
+	</head>
 
-	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
-	<link href="resources/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link href="resources/css/theme.css" media="all" rel="stylesheet" type="text/css" />
-	<link href="resources/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
- 	<script src="resources/js/star-rating.js" type="text/javascript"></script>
- 	<script src="resources/js/theme.js" type="text/javascript"></script>
- 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	<link href="resources/css/caspokewigs.css" media="all" rel="stylesheet" type="text/css" />
-	
-	<script>
-	//NÃO USADO
-	$(function(){
-		$('.kv-ltr-theme-fa-star').rating({
-			min: 0,
-			max: 6,
-			stars: 6,
-			step: 1,
-			clearCaption: 'Não avaliado',
-			size: 'xs',
-			showCaption: true,
-			showClear: false,
-			theme: 'krajee-fa',
-			starCaptions: {1: 'Aguardando entrada', 2: 'Aguardando compra', 3: 'Aguardando materiais', 4: 'Em desenvolvimento', 5: 'Concluido', 6: 'Enviado'}
-		});
-		
-		$('.kv-ltr-theme-fa-star').rating().on("rating.change", function(event, value) {
-				if (value > 1)
-				{
-					$.post("novaEncomenda", {'id' : this.id, 'statusId' : value})
-				}
-			});
-	});
-	</script>
-	
-	
-	
-</head>
-
-<body>
-  
-  	<a href="logout">Sair do sistema</a><br />
-  	<a href="novoOrcamento">Cadastrar novo orcamento</a><br />
-  	<a href="menu">Voltar ao menu principal</a><br />
-  <br /> <br />        
-
-	<h3>Lista de orçamentos em espera</h3>
-	<br />
-	  <table id="tabelaOrcamentos">
-		  <c:forEach items="${orcamentosEmEspera}" var="oe">
-		    <tr id="orcamento_${oe.id}">
-		      	<th>Personagem:</th>
-		      	<td>${oe.personagem}</td>
-		      	<th>Cliente:</th>
-		      	<td>${oe.cliente.nome}</td>
-		      	<td><a href="mostraOrcamento?id=${oe.id}">Alterar</a></td>
-			</tr>
-			<tr>
-				<th>Série:</th>
-		      	<td>${oe.serie}</td>
-		      	<th>Plataforma:</th>
-		      	<td>${oe.local}</td>
-		      	<td><a href="removeOrcamento?id=${oe.id}">Remover</a></td>
-		    </tr>
-		    <tr>
-		    	<th>Comentários:</th>
-		    	<td colspan="3">${oe.comentarios}</td>
-		      	<th><a href="novaEncomenda?id=${oe.id}">Pagamento recebido</a></th>
-		    </tr>
-		   	
-		      <!-- 
-		      <c:if test="${not empty o.data_cadastro}">
-		      	<td><fmt:formatDate 
-		          value="${o.data_cadastro.time}" 
-		          pattern="dd/MM/yyyy"/>
-		      	</td>
-		      </c:if>
-		      <c:if test="${empty o.data_cadastro}">
-		      	<td>Data não cadastrada</td>
-		      </c:if>
-		      -->
-		  </c:forEach>
-		</table>
-  
-  <br /><br /><br />
-      <h3>Orçamentos aceitos</h3>
-      <br />
-      
-       <table id="tabelaOrcamentos">
-		  <c:forEach items="${orcamentosAceitos}" var="oa">
-		    <tr id="orcamento_${oa.id}">
-		      	<th>Personagem:</th>
-		      	<td>${oa.personagem}</td>
-		      	<th>Cliente:</th>
-		      	<td>${oa.cliente.nome}</td>
-		      	<td><a href="mostraOrcamento?id=${oa.id}">Alterar</a></td>
-			</tr>
-			<tr>
-				<th>Série:</th>
-		      	<td>${oa.serie}</td>
-		      	<th>Plataforma:</th>
-		      	<td>${oa.local}</td>
-		      	<td><a href="removeOrcamento?id=${oa.id}">Remover</a></td>
-		    </tr>
-		    <tr>
-		    	<th>Comentários:</th>
-		    	<td colspan="3">${oa.comentarios}</td>
-		    </tr>
-		     
-		  </c:forEach>
-  		</table>
+	<body>
+  		<c:import url="/WEB-INF/views/cabecalho.jsp"/>
+  		<div class="container">
+			<c:choose>
+			<c:when test="${empty orcamentosEmEspera}">
+				<p> Você não tem orçamentos cadastrados no momento</p>
+				<a href="novoOrcamento">Clique aqui para solicitar um orçamento!</a>
+	  		</c:when>
+	  		<c:otherwise>
+	  			<div class="col-sm-2">
+	  				<a href="novoOrcamento">Novo orçamento</a>
+	  			</div>
+	  			<div class="col-sm-10">
+	  				<h2>Meus orçamentos</h2>
+	  				<div class="panel-group" id="accordion">
+	  					<c:forEach items="${orcamentosEmEspera}" var="oe">
+  						<div class="panel panel-default">
+  							<div class="panel-heading">
+     							<h4 class="panel-title">
+        							<a data-toggle="collapse" data-parent="#accordion" href="#collapse${oe.id}">${oe.personagem}, ${oe.serie}</a> <!-- tratar quanto nulos -->
+      							</h4>
+    						</div>
+  							<div id="collapse${oe.id}" class="panel-collapse collapse">
+  								<div class="panel-body">
+  								<!-- personagem, serie, data de cadastro, mensagens, imagens, botao pra pagamento -->
+  								<div class="col-sm-8">
+	  								<div class="media">
+	  								<c:forEach items="${oe.mensagens}" var="msg">
+	  									<c:choose>
+	  									<c:when test="${msg.doCliente==true}">
+		  									<div class="media-left">
+		  										<h4>${user.nome} <small><i>Postada em <fmt:formatDate value="${msg.data.time}" pattern="yyyy-MM-dd HH:mm:ss" /></i></small></h4>
+		  										<p>${msg.texto}</p>
+		  									</div>
+		  								</c:when>
+		  								<c:otherwise>
+		  									<div class="media-right">
+		  										<h4>CaspokeWigs <small><i>Postada em <fmt:formatDate value="${msg.data.time}" pattern="yyyy-MM-dd HH:mm:ss" /></i></small></h4>
+		  										<p>${msg.texto}</p>
+		  									</div>
+		  								</c:otherwise>
+		  								</c:choose>
+		  							</c:forEach>
+		  							<div class="input-group">
+		  								<textarea id="novaMensagem" rows="3" class="form-control"></textarea>
+		  								<span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-envelope"></i></span>
+		  							</div>
+	  								</div>
+	  							</div>
+  								<div class="col-sm-4">
+  									<p>Aqui vão ficar as imagens</p>
+  								</div>
+  								</div>
+  							</div>
+  						</div>
+  						</c:forEach>
+  					</div>
+	  			</div>
+	  			<!-- 
+	  			<div class="table-responsive"> 
+	  			<table id="tabelaOrcamentos" class="table">
+		  			<c:forEach items="${orcamentosEmEspera}" var="o">
+		    			<tr id="orcamento_${oe.id}">
+		      				<th>Personagem:</th>
+		      				<td>${o.personagem}</td>
+						</tr>
+						<tr>
+							<th>Série:</th>
+		      				<td>${o.serie}</td>
+		      				<th>Plataforma:</th>
+		      				<td>${o.local}</td>
+		    			</tr>
+		    			<tr>
+		    				<th>Comentários:</th>
+		    				<td colspan="3">${oe.comentarios}</td>
+		      				<th><a href="#" class="btn btn-success">Solicitar encomenda</a></th>
+		   				 </tr>
+		  			</c:forEach>
+				</table>
+				</div>
+				 -->
+			</c:otherwise>
+			</c:choose>
+		</div>
 </body>
 </html>

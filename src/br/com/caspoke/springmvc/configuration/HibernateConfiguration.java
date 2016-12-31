@@ -2,7 +2,6 @@ package br.com.caspoke.springmvc.configuration;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -13,17 +12,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.AbstractEntityManagerFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
  
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "br.com.caspoke.springmvc.configuration" })
 @PropertySource(value = { "classpath:/main/resources/application.properties" })
-public class HibernateConfiguration {
+public class HibernateConfiguration extends WebMvcConfigurerAdapter {
  
     @Autowired
     private Environment environment;
@@ -78,8 +81,9 @@ public class HibernateConfiguration {
     }
 
     @Bean
-    @Autowired //coloquei
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    public EntityManagerFactory entityManagerFactory() {
+    	DataSource dataSource = dataSource();
+    	JpaVendorAdapter jpaVendorAdapter = jpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
         lef.setDataSource(dataSource);
         lef.setJpaVendorAdapter(jpaVendorAdapter);
@@ -97,4 +101,11 @@ public class HibernateConfiguration {
     	jtm.setEntityManagerFactory(emf);
        return jtm;
     }
+    
+    @Override
+	public void addInterceptors(InterceptorRegistry registry) {
+	 OpenEntityManagerInViewInterceptor interceptor = new OpenEntityManagerInViewInterceptor();
+	 interceptor.setEntityManagerFactory(entityManagerFactory());
+	 registry.addWebRequestInterceptor(interceptor);
+	}
 }

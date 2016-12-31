@@ -24,13 +24,14 @@ import br.com.caspoke.springmvc.service.ClienteService;
 @Controller
 @Transactional
 public class LoginController {
-
+	
+		/*
 		@RequestMapping(value = {"/", "menu"}, method = RequestMethod.GET)
 		public String menu(Model model) {
 			model.addAttribute("loggedinuser", getPrincipal());
 			return "menu";
 		}
-		
+		*/
 		
 		//retorna Principal (nome de usuário) do cliente logado
 		private String getPrincipal(){

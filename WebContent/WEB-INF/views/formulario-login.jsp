@@ -56,7 +56,7 @@
 						    	<button type="submit" class="btn btn-default">Entrar no Sistema</button>
 						    </div>
 						</div>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></strong>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				    </form:form>
 		  		</div>
 		  		

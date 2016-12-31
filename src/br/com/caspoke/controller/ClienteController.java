@@ -1,10 +1,13 @@
 package br.com.caspoke.controller;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.caspoke.dao.IClienteDao;
 import br.com.caspoke.model.Cliente;
-import br.com.caspoke.model.PersistentLogin;
+import br.com.caspoke.model.ClienteProfile;
+import br.com.caspoke.model.Permissao;
 import br.com.caspoke.springmvc.service.ClienteProfileService;
 import br.com.caspoke.springmvc.service.ClienteService;
 import br.com.caspoke.springmvc.service.PersistentLoginService;
@@ -56,44 +60,46 @@ public class ClienteController {
 	@Qualifier("jpaClienteDao")
 	private IClienteDao dao;
 	
+	@RequestMapping(value = {"/", "menu"}, method = RequestMethod.GET)
+	public String menu(Model model, HttpSession session) {
+		if (!isCurrentAuthenticationAnonymous())
+		{
+			session.setAttribute("user", getClienteLogado());
+		}
+		return "menu";
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(Model model) {
 		if (isCurrentAuthenticationAnonymous()) {
 			model.addAttribute("cliente", new Cliente());
             return "formulario-login";
         } else {
-            return "redirect:menu";  
+        	model.addAttribute("loggedinuser", getPrincipal());
+            return "redirect:menu";
         }
 	}
 	
-	@RequestMapping("efetuaLogin")
-	public String efetuaLogin(Cliente c, Model model) {
-		System.out.println("usuario: " + c.getSsoId());
-		System.out.println("senha: " + c.getSenha());
-		Cliente cliente = dao.buscaPorSSO(c.getSsoId());
-		
-		if (cliente != null) {
-			return "redirect:menu";
-		}
-		else {
-			System.out.println("Cliente não encontrado");
-		}
-		return "redirect:login";
-	}
-	
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession s) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){    
+        if (auth != null){
             //new SecurityContextLogoutHandler().logout(request, response, auth);
         	if (persistentLoginService.existeSSO(auth.getName()))
         	{
         		persistentTokenBasedRememberMeServices.logout(request, response, auth);
         	}
             SecurityContextHolder.getContext().setAuthentication(null);
+            s.invalidate();
         }
         return "redirect:menu?logout";
 	}
+	
+	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDeniedPage(Model model) {
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "access-denied";
+    }
 	
 	@RequestMapping("novoCliente")
 	public String form (Cliente cliente, Model model) {
@@ -109,7 +115,7 @@ public class ClienteController {
 	public String adiciona(@Valid Cliente c, BindingResult result, Model model) {
 		
 		if (result.hasErrors()) {
-			System.out.println("TEM ERROS");
+			System.out.println("TEM ERROS - Nome: " + c.getNome());
 			model.addAttribute("roles", clienteProfileService.lista());
             return "cliente/formulario";
         }
@@ -120,6 +126,7 @@ public class ClienteController {
             model.addAttribute("roles", clienteProfileService.lista());
             return "cliente/formulario";
         }
+		
 		
 		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE EMAIL QUANDO NULO (dúvida: mensagem de erro @notnull ou criar email novo?)
 		if (c.getEmail().equals(""))
@@ -134,19 +141,41 @@ public class ClienteController {
 			c.setEmail(email);
 		}
 		
+		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE USUARIO QUANDO NULO
+		if (c.getSsoId().equals(""))
+		{
+			String[] nomes = c.getNome().toLowerCase().split(" ");
+			String usuario = "";
+			for (int i = 0; i < nomes.length; i++)
+			{
+				usuario = usuario + nomes[i];
+			}
+			c.setSsoId(usuario);
+		}
+		
+		//OPERAÇÃO APENAS PRA ADMIN: GERAÇÃO AUTOMATICA DE SENHA (123)
+		if (c.getSenha().equals(""))
+		{
+			c.setSenha("123");
+		}
+		
 		//Esses campos só estão disponíveis para edição no modo admin
 		if (c.getData() == null)
 			c.setData(Calendar.getInstance());
 		
 		//tratar permissao
+		if (c.getProfiles().size() == 0)
+		{
+			Set<ClienteProfile> cp = new HashSet();
+			cp.add(clienteProfileService.buscaPorTipo(Permissao.NORMAL.getTipo()));
+			c.setProfiles(cp);
+		}
 		
-		
-		clienteService.insere(c);
+		System.out.println("Nao salvou.Nome = " + c.getNome());
+		//clienteService.insere(c);
 		
 		model.addAttribute("success", "Usuário " + c.getNome() + " registrado com sucesso!");
         model.addAttribute("loggedinuser", getPrincipal());
-        
-        
         
 		return "redirect:efetuaLogin";
 		//so faz sentido ir pra lista de clientes se quem tiver feito o login tiver sido o admin
@@ -205,6 +234,19 @@ public class ClienteController {
 		    userName = principal.toString();
 		}
 		return userName;
+	}
+	
+	private Cliente getClienteLogado() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 System.out.println("buscando cliente logado");
+		if (principal instanceof UserDetails) {
+			String sso = ((UserDetails)principal).getUsername();
+			System.out.println("sso: " + sso);
+			Cliente c = dao.buscaPorSSO(sso);
+			System.out.println("retornou cliente de nome " + c.getNome());
+			return c;
+		}
+		return null;
 	}
 	
 	private boolean isCurrentAuthenticationAnonymous() {

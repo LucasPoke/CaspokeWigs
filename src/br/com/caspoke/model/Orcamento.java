@@ -1,25 +1,23 @@
 package br.com.caspoke.model;
 
 import java.util.Calendar;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Orcamento {
+public class Orcamento {	
 
 	@Id
 	@GeneratedValue
@@ -33,8 +31,9 @@ public class Orcamento {
 	@Temporal(TemporalType.DATE) //informa como salvar no banco
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar data_cadastro;
-	private String comentarios;
 	private boolean aceito;
+	@OneToMany(mappedBy="orcamento", targetEntity=Mensagem.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Mensagem> mensagens;
 	
 	public long getId() {
 		return this.id;
@@ -66,12 +65,6 @@ public class Orcamento {
 	public void setLocal(String local) {
 		this.local = local;
 	}
-	public String getComentarios() {
-		return comentarios;
-	}
-	public void setComentarios(String comentarios) {
-		this.comentarios = comentarios;
-	}
 	public Calendar getData_cadastro() {
 		return data_cadastro;
 	}
@@ -83,6 +76,12 @@ public class Orcamento {
 	}
 	public void setAceito(boolean aceito) {
 		this.aceito = aceito;
+	}
+	public List<Mensagem> getMensagens() {
+		return mensagens;
+	}
+	public void setMensagens(List<Mensagem> mensagens) {
+		this.mensagens = mensagens;
 	}
 	
 	

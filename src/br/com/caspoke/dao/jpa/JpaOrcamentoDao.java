@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,13 @@ public class JpaOrcamentoDao implements IOrcamentoDao {
 		return manager.createQuery("select o from Orcamento o where aceito = true").getResultList();
 	}
 
+	public List<Orcamento> listaEmEsperaPorCliente (long id) {
+		Query q = manager.createQuery("select o from Orcamento o where aceito = false and cliente_id=:id");
+		q.setParameter("id", id);
+		List<Orcamento> l = q.getResultList();
+		System.out.println("resultado: " + l.size());
+		return l;
+	}
 	public Orcamento buscaPorId(long id) {
 		return manager.find(Orcamento.class, id);
 	}

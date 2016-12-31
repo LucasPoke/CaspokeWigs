@@ -39,14 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        http.authorizeRequests()
 	        	.antMatchers("/").access("hasRole('NORMAL') or hasRole('PARCIAL') or hasRole('TOTAL')")
 	        	.antMatchers("/listaPerucas").access("hasRole('TOTAL') or hasRole('PARCIAL')")
-	        	.antMatchers("/listaPerucasBase").access("hasRole('TOTAL')")
-	        	.antMatchers("/novaPeruca").access("hasRole('TOTAL')")
+	        	.antMatchers("/listaPerucasBase", "/novaPeruca").access("hasRole('TOTAL')")
+	        	.antMatchers("/listaCLientes", "/novoCliente").access("hasRole('TOTAL') or !isAuthenticated()")
+	        	.antMatchers("/listaOrcamentos", "/novoOrcamento").access("isAuthenticated()")
 	        	.and().formLogin().loginPage("/login")
                 .usernameParameter("ssoId").passwordParameter("senha").and()
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
                 .tokenValiditySeconds(86400)
                 .and().csrf()
-                .and().exceptionHandling().accessDeniedPage("/access-denied");
+                .and().exceptionHandling().accessDeniedPage("/accessDenied");
 	    }
 	 
 	 	@Bean
